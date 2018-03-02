@@ -37,6 +37,29 @@ public abstract class TreeList {
             return "()";
         }
     };
+
+    public static TreeList of(String... values) {
+        int len = values.length;
+        if (len == 0) return EMPTY;
+
+        TreeList[] temp = new TreeList[len];
+        for (int i = 0; i < len; ++i) {
+            temp[i] = new Leaf(values[i]);
+        }
+        int leftCount = 1;
+        while (len > 1) {
+            int i, k;
+            for (i = 0, k = 0; k + 1 < len; ++i, k += 2) {
+                temp[i] = new Internal(temp[k], leftCount, temp[k + 1]);
+            }
+            if (k < len) {
+                temp[i++] = temp[k];
+            }
+            leftCount *= 2;
+            len = i;
+        }
+        return temp[0];
+    }
 }
 
 class Leaf extends TreeList {

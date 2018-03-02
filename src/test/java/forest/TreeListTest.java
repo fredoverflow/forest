@@ -104,4 +104,34 @@ public class TreeListTest {
     public void sizeBalanced() {
         assertEquals(4, abcd.size());
     }
+
+    @Test
+    public void ofNone() {
+        assertEquals("()", TreeList.of().toString());
+    }
+
+    @Test
+    public void ofOne() {
+        assertEquals("a", TreeList.of("a").toString());
+    }
+
+    @Test
+    public void ofTwo() {
+        assertEquals("(a b)", TreeList.of("a", "b").toString());
+    }
+
+    @Test
+    public void ofThree() {
+        assertEquals("((a b) c)", TreeList.of("a", "b", "c").toString());
+    }
+
+    @Test
+    public void ofFour() {
+        assertEquals("((a b) (c d))", TreeList.of("a", "b", "c", "d").toString());
+    }
+
+    @Test
+    public void ofFive() {
+        assertEquals("(((a b) (c d)) e)", TreeList.of("a", "b", "c", "d", "e").toString());
+    }
 }
