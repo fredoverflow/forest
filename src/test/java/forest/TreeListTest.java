@@ -69,4 +69,39 @@ public class TreeListTest {
         assertEquals("(a (c d))", abcd.remove(1).toString());
         assertEquals("((a b) d)", abcd.remove(2).toString());
     }
+
+    @Test
+    public void sizeEmpty() {
+        assertEquals(0, TreeList.EMPTY.size());
+    }
+
+    @Test
+    public void sizeLeaf() {
+        assertEquals(1, new Leaf("a").size());
+    }
+
+    @Test
+    public void sizeLeft() {
+        TreeList t = TreeList.EMPTY;
+        t = t.insert(0, "a");
+        t = t.insert(0, "b");
+        t = t.insert(0, "c");
+        t = t.insert(0, "d");
+        assertEquals(4, t.size());
+    }
+
+    @Test
+    public void sizeRight() {
+        TreeList t = TreeList.EMPTY;
+        t = t.insert(0, "a");
+        t = t.insert(1, "b");
+        t = t.insert(2, "c");
+        t = t.insert(3, "d");
+        assertEquals(4, t.size());
+    }
+
+    @Test
+    public void sizeBalanced() {
+        assertEquals(4, abcd.size());
+    }
 }

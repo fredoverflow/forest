@@ -3,6 +3,8 @@ package forest;
 import java.util.Random;
 
 public abstract class TreeList {
+    public abstract int size();
+
     public abstract String get(int index);
 
     public abstract TreeList insert(int index, String value);
@@ -10,6 +12,11 @@ public abstract class TreeList {
     public abstract TreeList remove(int index);
 
     public static final TreeList EMPTY = new TreeList() {
+        @Override
+        public int size() {
+            return 0;
+        }
+
         @Override
         public String get(int index) {
             throw new AssertionError("TreeList.EMPTY.get");
@@ -37,6 +44,11 @@ class Leaf extends TreeList {
 
     Leaf(String value) {
         this.value = value;
+    }
+
+    @Override
+    public int size() {
+        return 1;
     }
 
     @Override
@@ -74,6 +86,11 @@ class Internal extends TreeList {
         this.left = left;
         this.leftCount = leftCount;
         this.right = right;
+    }
+
+    @Override
+    public int size() {
+        return leftCount + right.size();
     }
 
     @Override
