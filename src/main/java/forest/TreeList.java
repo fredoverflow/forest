@@ -7,6 +7,8 @@ public abstract class TreeList {
 
     public abstract String get(int index);
 
+    public abstract TreeList set(int index, String value);
+
     public abstract TreeList insert(int index, String value);
 
     public abstract TreeList remove(int index);
@@ -20,6 +22,11 @@ public abstract class TreeList {
         @Override
         public String get(int index) {
             throw new AssertionError("TreeList.EMPTY.get");
+        }
+
+        @Override
+        public TreeList set(int index, String value) {
+            throw new AssertionError("TreeList.EMPTY.set");
         }
 
         @Override
@@ -80,6 +87,12 @@ class Leaf extends TreeList {
     }
 
     @Override
+    public TreeList set(int index, String value) {
+        if (index != 0) throw new IllegalArgumentException("index: " + index);
+        return new Leaf(value);
+    }
+
+    @Override
     public TreeList insert(int index, String value) {
         Leaf that = new Leaf(value);
         if (index == 0) return new Internal(that, 1, this);
@@ -122,6 +135,15 @@ class Internal extends TreeList {
             return left.get(index);
         } else {
             return right.get(index - leftCount);
+        }
+    }
+
+    @Override
+    public TreeList set(int index, String value) {
+        if (index < leftCount) {
+            return new Internal(left.set(index, value), leftCount, right);
+        } else {
+            return new Internal(left, leftCount, right.set(index - leftCount, value));
         }
     }
 

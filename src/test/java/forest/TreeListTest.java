@@ -134,4 +134,12 @@ public class TreeListTest {
     public void ofFive() {
         assertEquals("(((a b) (c d)) e)", TreeList.of("a", "b", "c", "d", "e").toString());
     }
+
+    @Test
+    public void setAbcd() {
+        assertEquals("((_ b) (c d))", abcd.set(0, "_").toString());
+        assertEquals("((a _) (c d))", abcd.set(1, "_").toString());
+        assertEquals("((a b) (_ d))", abcd.set(2, "_").toString());
+        assertEquals("((a b) (c _))", abcd.set(3, "_").toString());
+    }
 }
