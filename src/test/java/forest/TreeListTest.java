@@ -51,4 +51,22 @@ public class TreeListTest {
     public void insertAlphabet() {
         assertInsertionBehavesLikeArrayList("abcdefghijklmnopqrstuvwxyz");
     }
+
+    private static final TreeList abcd = TreeList.EMPTY.insert(0, "b").insert(1, "c").insert(0, "a").insert(3, "d");
+
+    @Test
+    public void removeFront() {
+        assertEquals("(b (c d))", abcd.remove(0).toString());
+    }
+
+    @Test
+    public void removeBack() {
+        assertEquals("((a b) c)", abcd.remove(3).toString());
+    }
+
+    @Test
+    public void removeMiddle() {
+        assertEquals("(a (c d))", abcd.remove(1).toString());
+        assertEquals("((a b) d)", abcd.remove(2).toString());
+    }
 }

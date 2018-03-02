@@ -7,6 +7,8 @@ public abstract class TreeList {
 
     public abstract TreeList insert(int index, String value);
 
+    public abstract TreeList remove(int index);
+
     public static final TreeList EMPTY = new TreeList() {
         @Override
         public String get(int index) {
@@ -16,6 +18,11 @@ public abstract class TreeList {
         @Override
         public TreeList insert(int index, String value) {
             return new Leaf(value);
+        }
+
+        @Override
+        public TreeList remove(int index) {
+            throw new AssertionError("TreeList.EMPTY.remove");
         }
 
         @Override
@@ -46,6 +53,11 @@ class Leaf extends TreeList {
     }
 
     @Override
+    public TreeList remove(int index) {
+        return EMPTY;
+    }
+
+    @Override
     public String toString() {
         return value;
     }
@@ -66,15 +78,31 @@ class Internal extends TreeList {
 
     @Override
     public String get(int index) {
-        return (index < leftCount) ? left.get(index) : right.get(index - leftCount);
+        if (index < leftCount) {
+            return left.get(index);
+        } else {
+            return right.get(index - leftCount);
+        }
     }
 
     @Override
     public TreeList insert(int index, String value) {
         if (index < leftCount || (index == leftCount && rng.nextBoolean())) {
             return new Internal(left.insert(index, value), leftCount + 1, right);
+        } else {
+            return new Internal(left, leftCount, right.insert(index - leftCount, value));
         }
-        return new Internal(left, leftCount, right.insert(index - leftCount, value));
+    }
+
+    @Override
+    public TreeList remove(int index) {
+        if (index < leftCount) {
+            TreeList newLeft = left.remove(index);
+            return (newLeft == EMPTY) ? right : new Internal(newLeft, leftCount - 1, right);
+        } else {
+            TreeList newRight = right.remove(index - leftCount);
+            return (newRight == EMPTY) ? left : new Internal(left, leftCount, newRight);
+        }
     }
 
     @Override
