@@ -75,17 +75,9 @@ class Internal extends TreeList {
             TreeList left = this.left.insertHelper(index, value);
             if (!isRed && left.isRed()) {
                 if (left.leftChild().isRed()) {
-                    if (right.isRed()) {
-                        return new Internal(true, left.blackened(), right.blackened());
-                    } else {
-                        return new Internal(false, left.leftChild(), new Internal(true, left.rightChild(), right));
-                    }
+                    return new Internal(true, left.leftChild().blackened(), new Internal(false, left.rightChild(), right));
                 } else if (left.rightChild().isRed()) {
-                    if (right.isRed()) {
-                        return new Internal(true, left.blackened(), right.blackened());
-                    } else {
-                        return new Internal(false, new Internal(true, left.leftChild(), left.rightChild().leftChild()), new Internal(true, left.rightChild().rightChild(), right));
-                    }
+                    return new Internal(true, new Internal(false, left.leftChild(), left.rightChild().leftChild()), new Internal(false, left.rightChild().rightChild(), right));
                 }
             }
             return new Internal(isRed, left, leftCount + 1, right);
@@ -93,17 +85,9 @@ class Internal extends TreeList {
             TreeList right = this.right.insertHelper(index - leftCount, value);
             if (!isRed && right.isRed()) {
                 if (right.rightChild().isRed()) {
-                    if (left.isRed()) {
-                        return new Internal(true, left.blackened(), right.blackened());
-                    } else {
-                        return new Internal(false, new Internal(true, left, right.leftChild()), right.rightChild());
-                    }
+                    return new Internal(true, new Internal(false, left, right.leftChild()), right.rightChild().blackened());
                 } else if (right.leftChild().isRed()) {
-                    if (left.isRed()) {
-                        return new Internal(true, left.blackened(), right.blackened());
-                    } else {
-                        return new Internal(false, new Internal(true, left, right.leftChild().leftChild()), new Internal(true, right.leftChild().rightChild(), right.rightChild()));
-                    }
+                    return new Internal(true, new Internal(false, left, right.leftChild().leftChild()), new Internal(false, right.leftChild().rightChild(), right.rightChild()));
                 }
             }
             return new Internal(isRed, left, leftCount, right);
