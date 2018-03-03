@@ -28,7 +28,7 @@ class Internal extends TreeList {
 
     @Override
     TreeList blackened() {
-        return new Internal(false, left, leftCount, right);
+        return isRed ? new Internal(false, left, leftCount, right) : this;
     }
 
     @Override
