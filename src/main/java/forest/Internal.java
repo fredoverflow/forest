@@ -13,12 +13,16 @@ class Internal extends TreeList {
     Internal(boolean isRed, TreeList left, int leftCount, TreeList right) {
         this.isRed = isRed;
         this.left = left;
+        assert leftCount == left.size() : leftCount + " != " + left.size();
         this.leftCount = leftCount;
         this.right = right;
     }
 
     Internal(boolean isRed, TreeList left, TreeList right) {
-        this(isRed, left, left.size(), right);
+        this.isRed = isRed;
+        this.left = left;
+        this.leftCount = left.size();
+        this.right = right;
     }
 
     @Override
