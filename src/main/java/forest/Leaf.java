@@ -31,16 +31,16 @@ class Leaf extends TreeList {
     @Override
     public TreeList insert(int index, String value) {
         Leaf that = new Leaf(value);
-        if (index == 0) return new Internal(false, that, 1, this);
-        if (index == 1) return new Internal(false, this, 1, that);
+        if (index == 0) return new Black(that, 1, this);
+        if (index == 1) return new Black(this, 1, that);
         throw new IllegalArgumentException("index: " + index);
     }
 
     @Override
     TreeList insertHelper(int index, String value) {
         Leaf that = new Leaf(value);
-        if (index == 0) return new Internal(true, that, 1, this);
-        if (index == 1) return new Internal(true, this, 1, that);
+        if (index == 0) return new Red(that, 1, this);
+        if (index == 1) return new Red(this, 1, that);
         throw new IllegalArgumentException("index: " + index);
     }
 
