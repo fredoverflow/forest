@@ -122,17 +122,17 @@ public class TreeListTest {
 
     @Test
     public void ofThree() {
-        assertEquals("(<a b> c)", TreeList.of("a", "b", "c").toString());
+        assertEquals("(a <b c>)", TreeList.of("a", "b", "c").toString());
     }
 
     @Test
     public void ofFour() {
-        assertEquals("(<a b> <c d>)", TreeList.of("a", "b", "c", "d").toString());
+        assertEquals("((a b) (c d))", TreeList.of("a", "b", "c", "d").toString());
     }
 
     @Test
     public void ofFive() {
-        assertEquals("((<a b> <c d>) e)", TreeList.of("a", "b", "c", "d", "e").toString());
+        assertEquals("((a b) (c <d e>))", TreeList.of("a", "b", "c", "d", "e").toString());
     }
 
     @Test

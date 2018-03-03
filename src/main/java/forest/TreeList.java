@@ -70,28 +70,10 @@ public abstract class TreeList {
     };
 
     public static TreeList of(String... values) {
-        int len = values.length;
-        if (len == 0) return EMPTY;
-        if (len == 1) return new Leaf(values[0]);
-
-        TreeList[] temp = new TreeList[len];
-        for (int i = 0; i < len; ++i) {
-            temp[i] = new Leaf(values[i]);
+        TreeList result = EMPTY;
+        for (int i = 0; i < values.length; ++i) {
+            result = result.insert(i, values[i]);
         }
-        int leftCount = 1;
-        boolean isRed = true;
-        while (len > 1) {
-            int i, k;
-            for (i = 0, k = 0; k + 1 < len; ++i, k += 2) {
-                temp[i] = new Internal(isRed, temp[k], leftCount, temp[k + 1]);
-            }
-            if (k < len) {
-                temp[i++] = temp[k];
-            }
-            leftCount *= 2;
-            isRed = !isRed;
-            len = i;
-        }
-        return temp[0].blackened();
+        return result;
     }
 }
