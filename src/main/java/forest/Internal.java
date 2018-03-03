@@ -110,7 +110,7 @@ class Internal extends TreeList {
     @Override
     public String toString() {
         if (isRed) {
-            // return "<" + left + " " + right + ">";
+            return "<" + left + " " + right + ">";
         }
         return "(" + left + " " + right + ")";
     }

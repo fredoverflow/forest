@@ -72,6 +72,7 @@ public abstract class TreeList {
     public static TreeList of(String... values) {
         int len = values.length;
         if (len == 0) return EMPTY;
+        if (len == 1) return new Leaf(values[0]);
 
         TreeList[] temp = new TreeList[len];
         for (int i = 0; i < len; ++i) {
@@ -91,6 +92,6 @@ public abstract class TreeList {
             isRed = !isRed;
             len = i;
         }
-        return temp[0];
+        return temp[0].blackened();
     }
 }

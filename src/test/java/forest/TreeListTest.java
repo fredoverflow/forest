@@ -56,18 +56,18 @@ public class TreeListTest {
 
     @Test
     public void removeFront() {
-        assertEquals("(b (c d))", abcd.remove(0).toString());
+        assertEquals("(b <c d>)", abcd.remove(0).toString());
     }
 
     @Test
     public void removeBack() {
-        assertEquals("((a b) c)", abcd.remove(3).toString());
+        assertEquals("(<a b> c)", abcd.remove(3).toString());
     }
 
     @Test
     public void removeMiddle() {
-        assertEquals("(a (c d))", abcd.remove(1).toString());
-        assertEquals("((a b) d)", abcd.remove(2).toString());
+        assertEquals("(a <c d>)", abcd.remove(1).toString());
+        assertEquals("(<a b> d)", abcd.remove(2).toString());
     }
 
     @Test
@@ -122,24 +122,24 @@ public class TreeListTest {
 
     @Test
     public void ofThree() {
-        assertEquals("((a b) c)", TreeList.of("a", "b", "c").toString());
+        assertEquals("(<a b> c)", TreeList.of("a", "b", "c").toString());
     }
 
     @Test
     public void ofFour() {
-        assertEquals("((a b) (c d))", TreeList.of("a", "b", "c", "d").toString());
+        assertEquals("(<a b> <c d>)", TreeList.of("a", "b", "c", "d").toString());
     }
 
     @Test
     public void ofFive() {
-        assertEquals("(((a b) (c d)) e)", TreeList.of("a", "b", "c", "d", "e").toString());
+        assertEquals("((<a b> <c d>) e)", TreeList.of("a", "b", "c", "d", "e").toString());
     }
 
     @Test
     public void setAbcd() {
-        assertEquals("((_ b) (c d))", abcd.set(0, "_").toString());
-        assertEquals("((a _) (c d))", abcd.set(1, "_").toString());
-        assertEquals("((a b) (_ d))", abcd.set(2, "_").toString());
-        assertEquals("((a b) (c _))", abcd.set(3, "_").toString());
+        assertEquals("(<_ b> <c d>)", abcd.set(0, "_").toString());
+        assertEquals("(<a _> <c d>)", abcd.set(1, "_").toString());
+        assertEquals("(<a b> <_ d>)", abcd.set(2, "_").toString());
+        assertEquals("(<a b> <c _>)", abcd.set(3, "_").toString());
     }
 }
