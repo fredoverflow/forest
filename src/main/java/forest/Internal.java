@@ -50,4 +50,9 @@ abstract class Internal extends TreeList {
     public TreeList add(int index, String value) {
         return addHelper(index, value).blackened();
     }
+
+    @Override
+    public TreeList remove(int index) {
+        return removeHelper(index).blackened();
+    }
 }

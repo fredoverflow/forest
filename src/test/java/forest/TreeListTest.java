@@ -8,19 +8,17 @@ import java.util.Random;
 import static org.junit.Assert.assertEquals;
 
 public class TreeListTest {
-    private void assertAddBehavesLikeArrayList(String s) {
+    private void assertAddBehavesLikeArrayList(String... values) {
         ArrayList<String> arrayList = new ArrayList<>();
         TreeList treeList = TreeList.EMPTY;
 
         Random rng = new Random();
-        int len = s.length();
+        int len = values.length;
 
         for (int i = 0; i < len; ++i) {
             int target = rng.nextInt(i + 1);
-            String c = "" + s.charAt(i);
-
-            arrayList.add(target, c);
-            treeList = treeList.add(target, c);
+            arrayList.add(target, values[i]);
+            treeList = treeList.add(target, values[i]);
         }
         for (int i = 0; i < len; ++i) {
             assertEquals(arrayList.get(i), treeList.get(i));
@@ -29,7 +27,7 @@ public class TreeListTest {
 
     @Test
     public void addNone() {
-        assertAddBehavesLikeArrayList("");
+        assertAddBehavesLikeArrayList();
     }
 
     @Test
@@ -39,35 +37,37 @@ public class TreeListTest {
 
     @Test
     public void addTwo() {
-        assertAddBehavesLikeArrayList("ab");
+        assertAddBehavesLikeArrayList("a", "b");
     }
 
     @Test
     public void addThree() {
-        assertAddBehavesLikeArrayList("abc");
+        assertAddBehavesLikeArrayList("a", "b", "c");
     }
 
     @Test
     public void addAlphabet() {
-        assertAddBehavesLikeArrayList("abcdefghijklmnopqrstuvwxyz");
+        assertAddBehavesLikeArrayList(alphabet);
     }
 
-    private static final TreeList abcd = TreeList.EMPTY.add(0, "b").add(1, "c").add(0, "a").add(3, "d");
+    private static final String[] alphabet = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+
+    private static final TreeList abcd = TreeList.of("a", "b", "c", "d");
 
     @Test
     public void removeFront() {
-        assertEquals("(b <c d>)", abcd.remove(0).toString());
+        assertEquals("(<b c> d)", abcd.remove(0).toString());
     }
 
     @Test
     public void removeBack() {
-        assertEquals("(<a b> c)", abcd.remove(3).toString());
+        assertEquals("(a <b c>)", abcd.remove(3).toString());
     }
 
     @Test
     public void removeMiddle() {
-        assertEquals("(a <c d>)", abcd.remove(1).toString());
-        assertEquals("(<a b> d)", abcd.remove(2).toString());
+        assertEquals("(<a c> d)", abcd.remove(1).toString());
+        assertEquals("(a <b d>)", abcd.remove(2).toString());
     }
 
     @Test
@@ -137,9 +137,26 @@ public class TreeListTest {
 
     @Test
     public void setAbcd() {
-        assertEquals("(<_ b> <c d>)", abcd.set(0, "_").toString());
-        assertEquals("(<a _> <c d>)", abcd.set(1, "_").toString());
-        assertEquals("(<a b> <_ d>)", abcd.set(2, "_").toString());
-        assertEquals("(<a b> <c _>)", abcd.set(3, "_").toString());
+        assertEquals("((_ b) (c d))", abcd.set(0, "_").toString());
+        assertEquals("((a _) (c d))", abcd.set(1, "_").toString());
+        assertEquals("((a b) (_ d))", abcd.set(2, "_").toString());
+        assertEquals("((a b) (c _))", abcd.set(3, "_").toString());
+    }
+
+    @Test
+    public void stressTestRemove() {
+        TreeList a = TreeList.of(alphabet);
+        a.blackHeight();
+        a.checkRed();
+        Random rng = new Random(0);
+        for (int i = 0; i < 10_000; ++i) {
+            TreeList t = a;
+            for (int n = t.size(); n > 0; --n) {
+                TreeList u = t.remove(rng.nextInt(n));
+                u.blackHeight();
+                u.checkRed();
+                t = u;
+            }
+        }
     }
 }

@@ -1,7 +1,21 @@
 package forest;
 
 public abstract class TreeList {
-    abstract boolean isRed();
+    boolean isRed() {
+        return false;
+    }
+
+    boolean isDoubleBlack() {
+        return false;
+    }
+
+    abstract int blackHeight();
+
+    abstract void checkRed();
+
+    TreeList plusBlack() {
+        throw new AssertionError("plusBlack");
+    }
 
     TreeList blackened() {
         throw new AssertionError("blackened");
@@ -27,10 +41,16 @@ public abstract class TreeList {
 
     public abstract TreeList remove(int index);
 
+    abstract TreeList removeHelper(int index);
+
     public static final TreeList EMPTY = new TreeList() {
         @Override
-        boolean isRed() {
-            return false;
+        int blackHeight() {
+            return 0;
+        }
+
+        @Override
+        void checkRed() {
         }
 
         @Override
@@ -61,6 +81,11 @@ public abstract class TreeList {
         @Override
         public TreeList remove(int index) {
             throw new AssertionError("TreeList.EMPTY.remove");
+        }
+
+        @Override
+        TreeList removeHelper(int index) {
+            throw new AssertionError("TreeList.EMPTY.removeHelper");
         }
 
         @Override

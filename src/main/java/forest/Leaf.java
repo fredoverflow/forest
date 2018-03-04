@@ -1,15 +1,24 @@
 package forest;
 
 class Leaf extends TreeList {
-    private final String value;
+    final String value;
 
     Leaf(String value) {
         this.value = value;
     }
 
     @Override
-    boolean isRed() {
-        return false;
+    int blackHeight() {
+        return 1;
+    }
+
+    @Override
+    void checkRed() {
+    }
+
+    @Override
+    TreeList plusBlack() {
+        return new Leaf2(value);
     }
 
     @Override
@@ -47,6 +56,11 @@ class Leaf extends TreeList {
     @Override
     public TreeList remove(int index) {
         return EMPTY;
+    }
+
+    @Override
+    TreeList removeHelper(int index) {
+        return null;
     }
 
     @Override

@@ -15,6 +15,33 @@ class Red extends Internal {
     }
 
     @Override
+    int blackHeight() {
+        int leftHeight = left.blackHeight();
+        int rightHeight = right.blackHeight();
+        if (leftHeight != rightHeight) {
+            throw new AssertionError(this);
+        }
+        return leftHeight;
+    }
+
+    @Override
+    void checkRed() {
+        if (left.isRed()) {
+            throw new AssertionError(left + " in " + this);
+        }
+        if (right.isRed()) {
+            throw new AssertionError(right + " in " + this);
+        }
+        left.checkRed();
+        right.checkRed();
+    }
+
+    @Override
+    TreeList plusBlack() {
+        return new Black(left, leftCount, right);
+    }
+
+    @Override
     TreeList blackened() {
         return new Black(left, leftCount, right);
     }
@@ -40,15 +67,37 @@ class Red extends Internal {
     }
 
     @Override
-    public TreeList remove(int index) {
+    TreeList removeHelper(int index) {
         if (index < leftCount) {
-            TreeList newLeft = left.remove(index);
-            // TODO balance
-            return (newLeft == EMPTY) ? right : new Red(newLeft, leftCount - 1, right);
+            TreeList left = this.left.removeHelper(index);
+            if (left == null) return right;
+
+            if (!left.isDoubleBlack()) return new Red(left, leftCount - 1, right);
+
+            TreeList c = right.leftChild();
+            TreeList d = right.rightChild();
+            if (!c.isRed()) return new Black(new Red(left.blackened(), c), d);
+
+            TreeList A = left.blackened();
+            TreeList B = c.leftChild();
+            TreeList C = c.rightChild();
+            TreeList D = d;
+            return new Red(new Black(A, B), new Black(C, D));
         } else {
-            TreeList newRight = right.remove(index - leftCount);
-            // TODO balance
-            return (newRight == EMPTY) ? left : new Red(left, leftCount, newRight);
+            TreeList right = this.right.removeHelper(index - leftCount);
+            if (right == null) return left;
+
+            if (!right.isDoubleBlack()) return new Red(left, leftCount, right);
+
+            TreeList a = left.leftChild();
+            TreeList b = left.rightChild();
+            if (!b.isRed()) return new Black(a, new Red(b, right.blackened()));
+
+            TreeList A = a;
+            TreeList B = b.leftChild();
+            TreeList C = b.rightChild();
+            TreeList D = right.blackened();
+            return new Red(new Black(A, B), new Black(C, D));
         }
     }
 
