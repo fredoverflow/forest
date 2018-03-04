@@ -29,12 +29,12 @@ class Red extends Internal {
     }
 
     @Override
-    TreeList insertHelper(int index, String value) {
+    TreeList addHelper(int index, String value) {
         if (index < leftCount || (index == leftCount && rng.nextBoolean())) {
-            TreeList left = this.left.insertHelper(index, value);
+            TreeList left = this.left.addHelper(index, value);
             return new Red(left, leftCount + 1, right);
         } else {
-            TreeList right = this.right.insertHelper(index - leftCount, value);
+            TreeList right = this.right.addHelper(index - leftCount, value);
             return new Red(left, leftCount, right);
         }
     }

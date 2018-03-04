@@ -47,7 +47,7 @@ abstract class Internal extends TreeList {
     }
 
     @Override
-    public TreeList insert(int index, String value) {
-        return insertHelper(index, value).blackened();
+    public TreeList add(int index, String value) {
+        return addHelper(index, value).blackened();
     }
 }

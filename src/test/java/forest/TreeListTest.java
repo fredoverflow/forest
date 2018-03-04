@@ -8,7 +8,7 @@ import java.util.Random;
 import static org.junit.Assert.assertEquals;
 
 public class TreeListTest {
-    private void assertInsertionBehavesLikeArrayList(String s) {
+    private void assertAddBehavesLikeArrayList(String s) {
         ArrayList<String> arrayList = new ArrayList<>();
         TreeList treeList = TreeList.EMPTY;
 
@@ -20,7 +20,7 @@ public class TreeListTest {
             String c = "" + s.charAt(i);
 
             arrayList.add(target, c);
-            treeList = treeList.insert(target, c);
+            treeList = treeList.add(target, c);
         }
         for (int i = 0; i < len; ++i) {
             assertEquals(arrayList.get(i), treeList.get(i));
@@ -28,31 +28,31 @@ public class TreeListTest {
     }
 
     @Test
-    public void insertNone() {
-        assertInsertionBehavesLikeArrayList("");
+    public void addNone() {
+        assertAddBehavesLikeArrayList("");
     }
 
     @Test
-    public void insertOne() {
-        assertInsertionBehavesLikeArrayList("a");
+    public void addOne() {
+        assertAddBehavesLikeArrayList("a");
     }
 
     @Test
-    public void insertTwo() {
-        assertInsertionBehavesLikeArrayList("ab");
+    public void addTwo() {
+        assertAddBehavesLikeArrayList("ab");
     }
 
     @Test
-    public void insertThree() {
-        assertInsertionBehavesLikeArrayList("abc");
+    public void addThree() {
+        assertAddBehavesLikeArrayList("abc");
     }
 
     @Test
-    public void insertAlphabet() {
-        assertInsertionBehavesLikeArrayList("abcdefghijklmnopqrstuvwxyz");
+    public void addAlphabet() {
+        assertAddBehavesLikeArrayList("abcdefghijklmnopqrstuvwxyz");
     }
 
-    private static final TreeList abcd = TreeList.EMPTY.insert(0, "b").insert(1, "c").insert(0, "a").insert(3, "d");
+    private static final TreeList abcd = TreeList.EMPTY.add(0, "b").add(1, "c").add(0, "a").add(3, "d");
 
     @Test
     public void removeFront() {
@@ -83,20 +83,20 @@ public class TreeListTest {
     @Test
     public void sizeLeft() {
         TreeList t = TreeList.EMPTY;
-        t = t.insert(0, "a");
-        t = t.insert(0, "b");
-        t = t.insert(0, "c");
-        t = t.insert(0, "d");
+        t = t.add(0, "a");
+        t = t.add(0, "b");
+        t = t.add(0, "c");
+        t = t.add(0, "d");
         assertEquals(4, t.size());
     }
 
     @Test
     public void sizeRight() {
         TreeList t = TreeList.EMPTY;
-        t = t.insert(0, "a");
-        t = t.insert(1, "b");
-        t = t.insert(2, "c");
-        t = t.insert(3, "d");
+        t = t.add(0, "a");
+        t = t.add(1, "b");
+        t = t.add(2, "c");
+        t = t.add(3, "d");
         assertEquals(4, t.size());
     }
 

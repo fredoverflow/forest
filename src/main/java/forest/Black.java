@@ -29,9 +29,9 @@ class Black extends Internal {
     }
 
     @Override
-    TreeList insertHelper(int index, String value) {
+    TreeList addHelper(int index, String value) {
         if (index < leftCount || (index == leftCount && rng.nextBoolean())) {
-            TreeList left = this.left.insertHelper(index, value);
+            TreeList left = this.left.addHelper(index, value);
             if (left.isRed()) {
                 if (left.leftChild().isRed()) {
                     return new Red(left.leftChild().blackened(), new Black(left.rightChild(), right));
@@ -41,7 +41,7 @@ class Black extends Internal {
             }
             return new Black(left, leftCount + 1, right);
         } else {
-            TreeList right = this.right.insertHelper(index - leftCount, value);
+            TreeList right = this.right.addHelper(index - leftCount, value);
             if (right.isRed()) {
                 if (right.rightChild().isRed()) {
                     return new Red(new Black(left, right.leftChild()), right.rightChild().blackened());

@@ -21,9 +21,9 @@ public abstract class TreeList {
 
     public abstract TreeList set(int index, String value);
 
-    public abstract TreeList insert(int index, String value);
+    public abstract TreeList add(int index, String value);
 
-    abstract TreeList insertHelper(int index, String value);
+    abstract TreeList addHelper(int index, String value);
 
     public abstract TreeList remove(int index);
 
@@ -49,13 +49,13 @@ public abstract class TreeList {
         }
 
         @Override
-        public TreeList insert(int index, String value) {
+        public TreeList add(int index, String value) {
             return new Leaf(value);
         }
 
         @Override
-        TreeList insertHelper(int index, String value) {
-            throw new AssertionError("TreeList.EMPTY.insertHelper");
+        TreeList addHelper(int index, String value) {
+            throw new AssertionError("TreeList.EMPTY.addHelper");
         }
 
         @Override
@@ -72,7 +72,7 @@ public abstract class TreeList {
     public static TreeList of(String... values) {
         TreeList result = EMPTY;
         for (int i = 0; i < values.length; ++i) {
-            result = result.insert(i, values[i]);
+            result = result.add(i, values[i]);
         }
         return result;
     }
