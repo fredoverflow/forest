@@ -1,6 +1,7 @@
 package forest;
 
 import java.util.Random;
+import java.util.function.Consumer;
 
 abstract class Internal extends TreeList {
     final TreeList left;
@@ -54,5 +55,11 @@ abstract class Internal extends TreeList {
     @Override
     public TreeList remove(int index) {
         return removeHelper(index).blackened();
+    }
+
+    @Override
+    public void forEach(Consumer<? super String> action) {
+        left.forEach(action);
+        right.forEach(action);
     }
 }

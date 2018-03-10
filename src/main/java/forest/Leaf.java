@@ -1,5 +1,7 @@
 package forest;
 
+import java.util.function.Consumer;
+
 class Leaf extends TreeList {
     private final String value;
 
@@ -61,6 +63,11 @@ class Leaf extends TreeList {
     @Override
     TreeList removeHelper(int index) {
         return null;
+    }
+
+    @Override
+    public void forEach(Consumer<? super String> action) {
+        action.accept(value);
     }
 
     @Override

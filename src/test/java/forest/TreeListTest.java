@@ -159,4 +159,11 @@ public class TreeListTest {
             }
         }
     }
+
+    @Test
+    public void forEach() {
+        StringBuilder sb = new StringBuilder(26);
+        TreeList.of(alphabet).forEach(sb::append);
+        assertEquals("abcdefghijklmnopqrstuvwxyz", sb.toString());
+    }
 }

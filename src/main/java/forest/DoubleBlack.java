@@ -1,5 +1,7 @@
 package forest;
 
+import java.util.function.Consumer;
+
 class DoubleBlack extends TreeList {
     private final TreeList black;
 
@@ -60,5 +62,10 @@ class DoubleBlack extends TreeList {
     @Override
     TreeList removeHelper(int index) {
         throw new AssertionError("DoubleBlack.removeHelper");
+    }
+
+    @Override
+    public void forEach(Consumer<? super String> action) {
+        throw new AssertionError("DoubleBlack.forEach");
     }
 }
