@@ -27,7 +27,7 @@ class Black extends Internal {
 
     @Override
     TreeList plusBlack() {
-        return new DoubleBlack(left, leftCount, right);
+        return new DoubleBlack(this);
     }
 
     @Override
@@ -48,20 +48,20 @@ class Black extends Internal {
     TreeList addHelper(int index, String value) {
         if (index < leftCount || (index == leftCount && rng.nextBoolean())) {
             TreeList left = this.left.addHelper(index, value);
-            if (left.isRed()) {
-                if (left.leftChild().isRed()) {
+            if (left instanceof Red) {
+                if (left.leftChild() instanceof Red) {
                     return new Red(left.leftChild().blackened(), new Black(left.rightChild(), right));
-                } else if (left.rightChild().isRed()) {
+                } else if (left.rightChild() instanceof Red) {
                     return new Red(new Black(left.leftChild(), left.rightChild().leftChild()), new Black(left.rightChild().rightChild(), right));
                 }
             }
             return new Black(left, leftCount + 1, right);
         } else {
             TreeList right = this.right.addHelper(index - leftCount, value);
-            if (right.isRed()) {
-                if (right.rightChild().isRed()) {
+            if (right instanceof Red) {
+                if (right.rightChild() instanceof Red) {
                     return new Red(new Black(left, right.leftChild()), right.rightChild().blackened());
-                } else if (right.leftChild().isRed()) {
+                } else if (right.leftChild() instanceof Red) {
                     return new Red(new Black(left, right.leftChild().leftChild()), new Black(right.leftChild().rightChild(), right.rightChild()));
                 }
             }
@@ -75,13 +75,13 @@ class Black extends Internal {
             TreeList left = this.left.removeHelper(index);
             if (left == null) return right.plusBlack();
 
-            if (!left.isDoubleBlack()) return new Black(left, leftCount - 1, right);
+            if (!(left instanceof DoubleBlack)) return new Black(left, leftCount - 1, right);
 
-            if (right.isRed()) {
+            if (right instanceof Red) {
                 TreeList c = right.leftChild().leftChild();
                 TreeList d = right.leftChild().rightChild();
                 TreeList e = right.rightChild();
-                if (!c.isRed()) return new Black(new Black(new Red(left.blackened(), c), d), e);
+                if (!(c instanceof Red)) return new Black(new Black(new Red(left.blackened(), c), d), e);
 
                 TreeList A = left.blackened();
                 TreeList B = c.leftChild();
@@ -92,7 +92,7 @@ class Black extends Internal {
 
             TreeList c = right.leftChild();
             TreeList d = right.rightChild();
-            if (!c.isRed()) return new DoubleBlack(new Red(left.blackened(), c), d);
+            if (!(c instanceof Red)) return new DoubleBlack(new Red(left.blackened(), c), d);
 
             TreeList A = left.blackened();
             TreeList B = c.leftChild();
@@ -103,13 +103,13 @@ class Black extends Internal {
             TreeList right = this.right.removeHelper(index - leftCount);
             if (right == null) return left.plusBlack();
 
-            if (!right.isDoubleBlack()) return new Black(left, leftCount, right);
+            if (!(right instanceof DoubleBlack)) return new Black(left, leftCount, right);
 
-            if (left.isRed()) {
+            if (left instanceof Red) {
                 TreeList a = left.leftChild();
                 TreeList b = left.rightChild().leftChild();
                 TreeList c = left.rightChild().rightChild();
-                if (!c.isRed()) return new Black(a, new Black(b, new Red(c, right.blackened())));
+                if (!(c instanceof Red)) return new Black(a, new Black(b, new Red(c, right.blackened())));
 
                 TreeList A = b;
                 TreeList B = c.leftChild();
@@ -120,7 +120,7 @@ class Black extends Internal {
 
             TreeList a = left.leftChild();
             TreeList b = left.rightChild();
-            if (!b.isRed()) return new DoubleBlack(a, new Red(b, right.blackened()));
+            if (!(b instanceof Red)) return new DoubleBlack(a, new Red(b, right.blackened()));
 
             TreeList A = a;
             TreeList B = b.leftChild();

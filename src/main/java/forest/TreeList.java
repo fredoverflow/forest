@@ -1,14 +1,6 @@
 package forest;
 
 public abstract class TreeList {
-    boolean isRed() {
-        return false;
-    }
-
-    boolean isDoubleBlack() {
-        return false;
-    }
-
     abstract int blackHeight();
 
     abstract void checkRed();

@@ -1,7 +1,7 @@
 package forest;
 
 class Leaf extends TreeList {
-    final String value;
+    private final String value;
 
     Leaf(String value) {
         this.value = value;
@@ -18,7 +18,7 @@ class Leaf extends TreeList {
 
     @Override
     TreeList plusBlack() {
-        return new Leaf2(value);
+        return new DoubleBlack(this);
     }
 
     @Override

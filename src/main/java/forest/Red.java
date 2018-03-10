@@ -10,11 +10,6 @@ class Red extends Internal {
     }
 
     @Override
-    boolean isRed() {
-        return true;
-    }
-
-    @Override
     int blackHeight() {
         int leftHeight = left.blackHeight();
         int rightHeight = right.blackHeight();
@@ -26,10 +21,10 @@ class Red extends Internal {
 
     @Override
     void checkRed() {
-        if (left.isRed()) {
+        if (left instanceof Red) {
             throw new AssertionError(left + " in " + this);
         }
-        if (right.isRed()) {
+        if (right instanceof Red) {
             throw new AssertionError(right + " in " + this);
         }
         left.checkRed();
@@ -72,11 +67,11 @@ class Red extends Internal {
             TreeList left = this.left.removeHelper(index);
             if (left == null) return right;
 
-            if (!left.isDoubleBlack()) return new Red(left, leftCount - 1, right);
+            if (!(left instanceof DoubleBlack)) return new Red(left, leftCount - 1, right);
 
             TreeList c = right.leftChild();
             TreeList d = right.rightChild();
-            if (!c.isRed()) return new Black(new Red(left.blackened(), c), d);
+            if (!(c instanceof Red)) return new Black(new Red(left.blackened(), c), d);
 
             TreeList A = left.blackened();
             TreeList B = c.leftChild();
@@ -87,11 +82,11 @@ class Red extends Internal {
             TreeList right = this.right.removeHelper(index - leftCount);
             if (right == null) return left;
 
-            if (!right.isDoubleBlack()) return new Red(left, leftCount, right);
+            if (!(right instanceof DoubleBlack)) return new Red(left, leftCount, right);
 
             TreeList a = left.leftChild();
             TreeList b = left.rightChild();
-            if (!b.isRed()) return new Black(a, new Red(b, right.blackened()));
+            if (!(b instanceof Red)) return new Black(a, new Red(b, right.blackened()));
 
             TreeList A = a;
             TreeList B = b.leftChild();
