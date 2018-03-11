@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class TreeListTest {
     private void assertAddBehavesLikeArrayList(String... values) {
@@ -164,6 +165,31 @@ public class TreeListTest {
     public void forEach() {
         StringBuilder sb = new StringBuilder(26);
         TreeList.of(alphabet).forEach(sb::append);
+        assertEquals("abcdefghijklmnopqrstuvwxyz", sb.toString());
+    }
+
+    @Test
+    public void forEmpty() {
+        for (String s : TreeList.EMPTY) {
+            fail("TreeList.EMPTY loop body entered");
+        }
+    }
+
+    @Test
+    public void forLeaf() {
+        StringBuilder sb = new StringBuilder(4);
+        for (String s : new Leaf("leaf")) {
+            sb.append(s);
+        }
+        assertEquals("leaf", sb.toString());
+    }
+
+    @Test
+    public void forAlphabet() {
+        StringBuilder sb = new StringBuilder(26);
+        for (String s : TreeList.of(alphabet)) {
+            sb.append(s);
+        }
         assertEquals("abcdefghijklmnopqrstuvwxyz", sb.toString());
     }
 }

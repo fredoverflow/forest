@@ -1,5 +1,7 @@
 package forest;
 
+import java.util.Iterator;
+
 class Red extends Internal {
     Red(TreeList left, int leftCount, TreeList right) {
         super(left, leftCount, right);

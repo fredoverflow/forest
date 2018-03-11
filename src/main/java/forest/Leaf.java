@@ -1,5 +1,6 @@
 package forest;
 
+import java.util.Iterator;
 import java.util.function.Consumer;
 
 class Leaf extends TreeList {
@@ -63,6 +64,25 @@ class Leaf extends TreeList {
     @Override
     TreeList removeHelper(int index) {
         return null;
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        return new Iterator<String>() {
+            String element = value;
+
+            @Override
+            public boolean hasNext() {
+                return element != null;
+            }
+
+            @Override
+            public String next() {
+                String result = element;
+                element = null;
+                return result;
+            }
+        };
     }
 
     @Override

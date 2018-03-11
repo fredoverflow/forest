@@ -1,8 +1,10 @@
 package forest;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.function.Consumer;
 
-public abstract class TreeList {
+public abstract class TreeList implements Iterable<String> {
     abstract int blackHeight();
 
     abstract void checkRed();
@@ -36,8 +38,6 @@ public abstract class TreeList {
     public abstract TreeList remove(int index);
 
     abstract TreeList removeHelper(int index);
-
-    public abstract void forEach(Consumer<? super String> action);
 
     public static final TreeList EMPTY = new TreeList() {
         @Override
@@ -82,6 +82,11 @@ public abstract class TreeList {
         @Override
         TreeList removeHelper(int index) {
             throw new AssertionError("TreeList.EMPTY.removeHelper");
+        }
+
+        @Override
+        public Iterator<String> iterator() {
+            return Collections.emptyIterator();
         }
 
         @Override

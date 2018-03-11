@@ -1,6 +1,8 @@
 package forest;
 
+import java.util.Iterator;
 import java.util.Random;
+import java.util.Stack;
 import java.util.function.Consumer;
 
 abstract class Internal extends TreeList {
@@ -55,6 +57,41 @@ abstract class Internal extends TreeList {
     @Override
     public TreeList remove(int index) {
         return removeHelper(index).blackened();
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        Stack<TreeList> path = new Stack<>();
+        TreeList self = this;
+        while (self instanceof Internal) {
+            path.push(self);
+            self = self.leftChild();
+        }
+        path.push(self);
+
+        return new Iterator<String>() {
+            @Override
+            public boolean hasNext() {
+                return !path.empty();
+            }
+
+            @Override
+            public String next() {
+                TreeList self = path.pop();
+                String result = self.get(0);
+                while (path.peek().rightChild() == self) {
+                    self = path.pop();
+                    if (path.empty()) return result;
+                }
+                self = path.peek().rightChild();
+                while (self instanceof Internal) {
+                    path.push(self);
+                    self = self.leftChild();
+                }
+                path.push(self);
+                return result;
+            }
+        };
     }
 
     @Override

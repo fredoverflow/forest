@@ -1,5 +1,6 @@
 package forest;
 
+import java.util.Iterator;
 import java.util.function.Consumer;
 
 class DoubleBlack extends TreeList {
@@ -62,6 +63,11 @@ class DoubleBlack extends TreeList {
     @Override
     TreeList removeHelper(int index) {
         throw new AssertionError("DoubleBlack.removeHelper");
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        throw new AssertionError("DoubleBlack.iterator");
     }
 
     @Override
