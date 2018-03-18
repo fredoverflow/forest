@@ -12,14 +12,14 @@ public class TreeListTest {
 
     @Test
     public void insertA() {
-        TreeList a = TreeList.EMPTY.insert(0, "a");
+        TreeList a = TreeList.of("a");
         assertEquals(1, a.size());
         assertEquals("a", a.get(0));
     }
 
     @Test
     public void insertAB() {
-        TreeList a = TreeList.EMPTY.insert(0, "a");
+        TreeList a = TreeList.of("a");
         TreeList ab = a.insert(1, "b");
         assertEquals(2, ab.size());
         assertEquals("a", ab.get(0));
@@ -28,7 +28,7 @@ public class TreeListTest {
 
     @Test
     public void insertBA() {
-        TreeList b = TreeList.EMPTY.insert(0, "b");
+        TreeList b = TreeList.of("b");
         TreeList ab = b.insert(0, "a");
         assertEquals(2, ab.size());
         assertEquals("a", ab.get(0));
@@ -36,8 +36,8 @@ public class TreeListTest {
     }
 
     @Test
-    public void insertFront() {
-        TreeList bc = TreeList.EMPTY.insert(0, "b").insert(1, "c");
+    public void insertThree0() {
+        TreeList bc = TreeList.of("b", "c");
         TreeList abc = bc.insert(0, "a");
         assertEquals(3, abc.size());
         assertEquals("a", abc.get(0));
@@ -46,8 +46,8 @@ public class TreeListTest {
     }
 
     @Test
-    public void insertMiddle() {
-        TreeList ac = TreeList.EMPTY.insert(0, "a").insert(1, "c");
+    public void insertThree1() {
+        TreeList ac = TreeList.of("a", "c");
         TreeList abc = ac.insert(1, "b");
         assertEquals(3, abc.size());
         assertEquals("a", abc.get(0));
@@ -56,8 +56,8 @@ public class TreeListTest {
     }
 
     @Test
-    public void insertBack() {
-        TreeList ab = TreeList.EMPTY.insert(0, "a").insert(1, "b");
+    public void insertThree2() {
+        TreeList ab = TreeList.of("a", "b");
         TreeList abc = ab.insert(2, "c");
         assertEquals(3, abc.size());
         assertEquals("a", abc.get(0));

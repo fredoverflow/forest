@@ -25,4 +25,25 @@ public abstract class TreeList {
             return new Leaf1(value);
         }
     };
+
+    public static TreeList of(String value) {
+        return new Leaf1(value);
+    }
+
+    public static TreeList of(String a, String b) {
+        return new Leaf2(a, b);
+    }
+
+    public static TreeList of(String a, String b, String c) {
+        return new Leaf3(a, b, c);
+    }
+
+    public static TreeList of(String... values) {
+        TreeList result = TreeList.EMPTY;
+        int index = 0;
+        for (String s : values) {
+            result = result.insert(index++, s);
+        }
+        return result;
+    }
 }
