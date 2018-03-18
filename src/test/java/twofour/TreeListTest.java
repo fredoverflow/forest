@@ -34,4 +34,34 @@ public class TreeListTest {
         assertEquals("a", ab.get(0));
         assertEquals("b", ab.get(1));
     }
+
+    @Test
+    public void insertFront() {
+        TreeList bc = TreeList.EMPTY.insert(0, "b").insert(1, "c");
+        TreeList abc = bc.insert(0, "a");
+        assertEquals(3, abc.size());
+        assertEquals("a", abc.get(0));
+        assertEquals("b", abc.get(1));
+        assertEquals("c", abc.get(2));
+    }
+
+    @Test
+    public void insertMiddle() {
+        TreeList ac = TreeList.EMPTY.insert(0, "a").insert(1, "c");
+        TreeList abc = ac.insert(1, "b");
+        assertEquals(3, abc.size());
+        assertEquals("a", abc.get(0));
+        assertEquals("b", abc.get(1));
+        assertEquals("c", abc.get(2));
+    }
+
+    @Test
+    public void insertBack() {
+        TreeList ab = TreeList.EMPTY.insert(0, "a").insert(1, "b");
+        TreeList abc = ab.insert(2, "c");
+        assertEquals(3, abc.size());
+        assertEquals("a", abc.get(0));
+        assertEquals("b", abc.get(1));
+        assertEquals("c", abc.get(2));
+    }
 }
