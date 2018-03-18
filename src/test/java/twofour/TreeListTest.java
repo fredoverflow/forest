@@ -12,24 +12,23 @@ public class TreeListTest {
     }
 
     @Test
-    public void insertA() {
-        TreeList a = TreeList.of("a");
-        assertEquals(1, a.size());
-        assertEquals("a", a.get(0));
+    public void insertOne() {
+        TreeList a = TreeList.EMPTY.insert(0, "a");
+        assertEquals("(a)", a.toString());
+    }
+
+    private static final TreeList a = TreeList.of("a");
+
+    @Test
+    public void insertTwo0() {
+        TreeList _a = a.insert(0, "_");
+        assertEquals("(_ a)", _a.toString());
     }
 
     @Test
-    public void insertAB() {
-        TreeList a = TreeList.of("a");
-        TreeList ab = a.insert(1, "b");
-        assertEquals("(a b)", ab.toString());
-    }
-
-    @Test
-    public void insertBA() {
-        TreeList b = TreeList.of("b");
-        TreeList ab = b.insert(0, "a");
-        assertEquals("(a b)", ab.toString());
+    public void insertTwo1() {
+        TreeList a_ = a.insert(1, "_");
+        assertEquals("(a _)", a_.toString());
     }
 
     private static final TreeList ab = TreeList.of("a", "b");
