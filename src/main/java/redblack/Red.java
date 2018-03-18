@@ -1,6 +1,4 @@
-package forest;
-
-import java.util.Iterator;
+package redblack;
 
 class Red extends Internal {
     Red(TreeList left, int leftCount, TreeList right) {

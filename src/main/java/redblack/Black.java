@@ -1,4 +1,4 @@
-package forest;
+package redblack;
 
 class Black extends Internal {
     Black(TreeList left, int leftCount, TreeList right) {
