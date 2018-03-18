@@ -41,8 +41,7 @@ class Internal3 extends TreeList {
             Internal2Split S = (Internal2Split) A;
             return new Internal4(S.a, S.b, b, c);
         }
-        if (index < abCount || index == abCount && b.slots() <= c.slots())
-        {
+        if (index < abCount || index == abCount && b.slots() <= c.slots()) {
             TreeList B = b.insert(index - aCount, value);
             if (!(B instanceof Internal2Split)) return new Internal3(a, B, c);
 
