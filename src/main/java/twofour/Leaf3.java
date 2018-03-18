@@ -27,6 +27,11 @@ class Leaf3 extends TreeList {
 
     @Override
     public TreeList insert(int index, String value) {
+        if (index == 0) return new Internal2(new Leaf2(value, a), new Leaf2(b, c));
+        if (index == 1) return new Internal2(new Leaf2(a, value), new Leaf2(b, c));
+        if (index == 2) return new Internal2(new Leaf2(a, b), new Leaf2(value, c));
+        if (index == 3) return new Internal2(new Leaf2(a, b), new Leaf2(c, value));
+
         throw new IllegalArgumentException("Leaf3.insert(" + index + ")");
     }
 }
