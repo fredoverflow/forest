@@ -53,32 +53,30 @@ public class TreeListTest {
         assertEquals("(a b c)", abc.toString());
     }
 
+    private static final TreeList abc = TreeList.of("a", "b", "c");
+
     @Test
     public void insertFour0() {
-        TreeList bcd = TreeList.of("b", "c", "d");
-        TreeList abcd = bcd.insert(0, "a");
-        assertEquals("((a b) (c d))", abcd.toString());
+        TreeList _abc = abc.insert(0, "_");
+        assertEquals("((_ a) (b c))", _abc.toString());
     }
 
     @Test
     public void insertFour1() {
-        TreeList acd = TreeList.of("a", "c", "d");
-        TreeList abcd = acd.insert(1, "b");
-        assertEquals("((a b) (c d))", abcd.toString());
+        TreeList a_bc = abc.insert(1, "_");
+        assertEquals("((a _) (b c))", a_bc.toString());
     }
 
     @Test
     public void insertFour2() {
-        TreeList abd = TreeList.of("a", "b", "d");
-        TreeList abcd = abd.insert(2, "c");
-        assertEquals("((a b) (c d))", abcd.toString());
+        TreeList ab_c = abc.insert(2, "_");
+        assertEquals("((a b) (_ c))", ab_c.toString());
     }
 
     @Test
     public void insertFour3() {
-        TreeList abc = TreeList.of("a", "b", "c");
-        TreeList abcd = abc.insert(3, "d");
-        assertEquals("((a b) (c d))", abcd.toString());
+        TreeList abc_ = abc.insert(3, "_");
+        assertEquals("((a b) (c _))", abc_.toString());
     }
 
     private static final TreeList abcd = TreeList.of("a", "b", "c", "d");
