@@ -146,4 +146,48 @@ public class TreeListTest {
         TreeList abcde_ = abcde.insert(5, "_");
         assertEquals("((a b) (c d) (e _))", abcde_.toString());
     }
+
+    private static TreeList abcdef = TreeList.of("a", "b", "c", "d", "e", "f");
+
+    @Test
+    public void insertSeven0() {
+        TreeList _abcdef = abcdef.insert(0, "_");
+        assertEquals("((_ a b) (c d) (e f))", _abcdef.toString());
+    }
+
+    @Test
+    public void insertSeven1() {
+        TreeList a_bcdef = abcdef.insert(1, "_");
+        assertEquals("((a _ b) (c d) (e f))", a_bcdef.toString());
+    }
+
+    @Test
+    public void insertSeven2() {
+        TreeList ab_cdef = abcdef.insert(2, "_");
+        assertEquals("((a b _) (c d) (e f))", ab_cdef.toString());
+    }
+
+    @Test
+    public void insertSeven3() {
+        TreeList abc_def = abcdef.insert(3, "_");
+        assertEquals("((a b) (c _ d) (e f))", abc_def.toString());
+    }
+
+    @Test
+    public void insertSeven4() {
+        TreeList abcd_ef = abcdef.insert(4, "_");
+        assertEquals("((a b) (c d _) (e f))", abcd_ef.toString());
+    }
+
+    @Test
+    public void insertSeven5() {
+        TreeList abcde_f = abcdef.insert(5, "_");
+        assertEquals("((a b) (c d) (e _ f))", abcde_f.toString());
+    }
+
+    @Test
+    public void insertSeven6() {
+        TreeList abcdef_ = abcdef.insert(6, "_");
+        assertEquals("((a b) (c d) (e f _))", abcdef_.toString());
+    }
 }
