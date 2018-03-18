@@ -32,25 +32,24 @@ public class TreeListTest {
         assertEquals("(a b)", ab.toString());
     }
 
+    private static final TreeList ab = TreeList.of("a", "b");
+
     @Test
     public void insertThree0() {
-        TreeList bc = TreeList.of("b", "c");
-        TreeList abc = bc.insert(0, "a");
-        assertEquals("(a b c)", abc.toString());
+        TreeList _ab = ab.insert(0, "_");
+        assertEquals("(_ a b)", _ab.toString());
     }
 
     @Test
     public void insertThree1() {
-        TreeList ac = TreeList.of("a", "c");
-        TreeList abc = ac.insert(1, "b");
-        assertEquals("(a b c)", abc.toString());
+        TreeList a_b = ab.insert(1, "_");
+        assertEquals("(a _ b)", a_b.toString());
     }
 
     @Test
     public void insertThree2() {
-        TreeList ab = TreeList.of("a", "b");
-        TreeList abc = ab.insert(2, "c");
-        assertEquals("(a b c)", abc.toString());
+        TreeList ab_ = ab.insert(2, "_");
+        assertEquals("(a b _)", ab_.toString());
     }
 
     private static final TreeList abc = TreeList.of("a", "b", "c");
