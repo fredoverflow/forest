@@ -1,6 +1,8 @@
 package twofour;
 
 public abstract class TreeList {
+    abstract int slots();
+
     public abstract int size();
 
     public abstract String get(int index);
@@ -17,6 +19,11 @@ public abstract class TreeList {
     abstract void appendTo(StringBuilder sb);
 
     public static final TreeList EMPTY = new TreeList() {
+        @Override
+        int slots() {
+            return 0;
+        }
+
         @Override
         public int size() {
             return 0;

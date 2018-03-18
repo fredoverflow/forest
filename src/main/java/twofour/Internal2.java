@@ -12,6 +12,11 @@ class Internal2 extends TreeList {
     }
 
     @Override
+    int slots() {
+        return 2;
+    }
+
+    @Override
     public int size() {
         return aCount + b.size();
     }
@@ -24,7 +29,7 @@ class Internal2 extends TreeList {
 
     @Override
     public TreeList insert(int index, String value) {
-        if (index < aCount) {
+        if (index < aCount || index == aCount && a.slots() <= b.slots()) {
             TreeList A = a.insert(index, value);
             if (!(A instanceof Internal2Split)) return new Internal2(A, b);
 

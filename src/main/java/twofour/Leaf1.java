@@ -8,6 +8,11 @@ class Leaf1 extends TreeList {
     }
 
     @Override
+    int slots() {
+        return 1;
+    }
+
+    @Override
     public int size() {
         return 1;
     }

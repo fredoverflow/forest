@@ -16,6 +16,11 @@ class Internal3 extends TreeList {
     }
 
     @Override
+    int slots() {
+        return 3;
+    }
+
+    @Override
     public int size() {
         return abCount + c.size();
     }
