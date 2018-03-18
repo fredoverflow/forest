@@ -206,9 +206,9 @@ public class TreeListTest {
         keys = keys.insert(5, "h"); // eadfghcb
         keys = keys.insert(1, "i"); // eiadfghcb
         keys = keys.insert(7, "j"); // eiadfghjcb
-        assertEquals("(((e i) (a d)) ((f g h) (j c b)))", keys.toString());
-
         keys = keys.insert(8, "k"); // eiadfghjkcb
+        assertEquals("(((e i) (a d)) ((f g h) (j k) (c b)))", keys.toString());
+
         keys = keys.insert(9, "l"); // eiadfghjklcb
         keys = keys.insert(12, "m"); //eiadfghjklcbm
         keys = keys.insert(12, "n"); //eiadfghjklcbnm
@@ -221,12 +221,10 @@ public class TreeListTest {
         keys = keys.insert(4, "u"); // qertuiopasdfghjklcbnm
         keys = keys.insert(18, "v"); //qertuiopasdfghjklcvbnm
         keys = keys.insert(1, "w"); // qwertuiopasdfghjklcvbnm
-        assertEquals("((((q w) (e r) (t u) (i o)) ((p a) (s d))) (((f g h) (j k l)) ((c v b) (n m))))", keys.toString());
-
         keys = keys.insert(18, "x"); //qwertuiopasdfghjklxcvbnm
         keys = keys.insert(18, "y"); //qwertuiopasdfghjklyxcvbnm
         keys = keys.insert(5, "z"); // qwertzuiopasdfghjklyxcvbnm
-        assertEquals("((((q w) (e r)) ((t z u) (i o)) ((p a) (s d))) (((f g h) (j k) (l y x)) ((c v b) (n m))))", keys.toString());
+        assertEquals("(((q w) (e r) (t z u) (i o)) ((p a) (s d)) ((f g h) (j k) (l y x)) ((c v b) (n m)))", keys.toString());
 
         assertEquals(26, keys.size());
         assertEquals("q", keys.get(0));

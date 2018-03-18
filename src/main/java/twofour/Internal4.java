@@ -39,16 +39,43 @@ class Internal4 extends TreeList {
 
     @Override
     public TreeList insert(int index, String value) {
+        if (index < aCount || index == aCount && a.slots() <= b.slots()) {
+            TreeList A = a.insert(index, value);
+            if (!(A instanceof Internal2Split)) return new Internal4(A, b, c, d);
+
+            Internal2Split S = (Internal2Split) A;
+            Internal3 Ab = new Internal3(S.a, S.b, b);
+            Internal2 cd = new Internal2(c, d);
+            return new Internal2Split(Ab, cd);
+        }
         if (index < abCount || index == abCount && b.slots() <= c.slots())
         {
-            TreeList ab = new Internal2(a, b).insert(index, value);
-            TreeList cd = new Internal2(c, d);
-            return new Internal2Split(ab, cd);
+            TreeList B = b.insert(index - aCount, value);
+            if (!(B instanceof Internal2Split)) return new Internal4(a, B, c, d);
+
+            Internal2Split S = (Internal2Split) B;
+            Internal3 aB = new Internal3(this.a, S.a, S.b);
+            Internal2 cd = new Internal2(c, d);
+            return new Internal2Split(aB, cd);
+        }
+        if (index < abcCount ||index == abcCount && c.slots() <= d.slots())
+        {
+            TreeList C = c.insert(index - abCount, value);
+            if (!(C instanceof Internal2Split)) return new Internal4(a, b, C, d);
+
+            Internal2Split S = (Internal2Split) C;
+            Internal2 ab = new Internal2(this.a, b);
+            Internal3 Cd = new Internal3(S.a, S.b, d);
+            return new Internal2Split(ab, Cd);
         }
         {
-            TreeList ab = new Internal2(a, b);
-            TreeList cd = new Internal2(c, d).insert(index - abCount, value);
-            return new Internal2Split(ab, cd);
+            TreeList D = d.insert(index - abcCount, value);
+            if (!(D instanceof Internal2Split)) return new Internal4(a, b, c, D);
+
+            Internal2Split S = (Internal2Split) D;
+            Internal2 ab = new Internal2(this.a, b);
+            Internal3 cD = new Internal3(c, S.a, S.b);
+            return new Internal2Split(ab, cD);
         }
     }
 
