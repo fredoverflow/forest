@@ -22,7 +22,7 @@ public abstract class TreeList {
         public TreeList insert(int index, String value) {
             if (index != 0) throw new IllegalArgumentException("TreeList.EMPTY.insert(" + index + ")");
 
-            return new Leaf(value);
+            return new Leaf1(value);
         }
     };
 }
