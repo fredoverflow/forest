@@ -7,6 +7,15 @@ public abstract class TreeList {
 
     public abstract TreeList insert(int index, String value);
 
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        appendTo(sb);
+        return sb.toString();
+    }
+
+    abstract void appendTo(StringBuilder sb);
+
     public static final TreeList EMPTY = new TreeList() {
         @Override
         public int size() {
@@ -23,6 +32,16 @@ public abstract class TreeList {
             if (index != 0) throw new IllegalArgumentException("TreeList.EMPTY.insert(" + index + ")");
 
             return new Leaf1(value);
+        }
+
+        @Override
+        public String toString() {
+            return "()";
+        }
+
+        @Override
+        void appendTo(StringBuilder sb) {
+            throw new AssertionError("TreeList.EMPTY.appendTo");
         }
     };
 

@@ -30,4 +30,13 @@ class Leaf2 extends TreeList {
 
         throw new IllegalArgumentException("Leaf2.insert(" + index + ")");
     }
+
+    @Override
+    void appendTo(StringBuilder sb) {
+        sb.append('(');
+        sb.append(a);
+        sb.append(' ');
+        sb.append(b);
+        sb.append(')');
+    }
 }

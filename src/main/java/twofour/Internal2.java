@@ -24,6 +24,28 @@ class Internal2 extends TreeList {
 
     @Override
     public TreeList insert(int index, String value) {
-        return null;
+        if (index < aCount) {
+            TreeList A = a.insert(index, value);
+            if (!(A instanceof Internal2Split)) return new Internal2(A, b);
+
+            Internal2Split S = (Internal2Split) A;
+            return new Internal3(S.a, S.b, b);
+        }
+        {
+            TreeList B = b.insert(index - aCount, value);
+            if (!(B instanceof Internal2Split)) return new Internal2(a, B);
+
+            Internal2Split S = (Internal2Split) B;
+            return new Internal3(a, S.a, S.b);
+        }
+    }
+
+    @Override
+    void appendTo(StringBuilder sb) {
+        sb.append('(');
+        a.appendTo(sb);
+        sb.append(' ');
+        b.appendTo(sb);
+        sb.append(')');
     }
 }
