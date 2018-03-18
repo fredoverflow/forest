@@ -39,7 +39,7 @@ class Internal3 extends TreeList {
             if (!(A instanceof Internal2Split)) return new Internal3(A, b, c);
 
             Internal2Split S = (Internal2Split) A;
-            return split(S.a, S.b, b, c);
+            return new Internal4(S.a, S.b, b, c);
         }
         if (index < abCount || index == abCount && b.slots() <= c.slots())
         {
@@ -47,19 +47,15 @@ class Internal3 extends TreeList {
             if (!(B instanceof Internal2Split)) return new Internal3(a, B, c);
 
             Internal2Split S = (Internal2Split) B;
-            return split(a, S.a, S.b, c);
+            return new Internal4(a, S.a, S.b, c);
         }
         {
             TreeList C = c.insert(index - abCount, value);
             if (!(C instanceof Internal2Split)) return new Internal3(a, b, C);
 
             Internal2Split S = (Internal2Split) C;
-            return split(a, b, S.a, S.b);
+            return new Internal4(a, b, S.a, S.b);
         }
-    }
-
-    private static TreeList split(TreeList a, TreeList b, TreeList c, TreeList d) {
-        return new Internal2Split(new Internal2(a, b), new Internal2(c, d));
     }
 
     @Override

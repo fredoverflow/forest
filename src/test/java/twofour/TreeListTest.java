@@ -190,4 +190,46 @@ public class TreeListTest {
         TreeList abcdef_ = abcdef.insert(6, "_");
         assertEquals("((a b) (c d) (e f _))", abcdef_.toString());
     }
+
+    @Test
+    public void insertGermanKeys() {
+        TreeList keys = TreeList.EMPTY;
+        keys = keys.insert(0, "a"); // a
+        keys = keys.insert(1, "b"); // ab
+        keys = keys.insert(1, "c"); // acb
+        keys = keys.insert(1, "d"); // adcb
+        assertEquals("((a d) (c b))", keys.toString());
+
+        keys = keys.insert(0, "e"); // eadcb
+        keys = keys.insert(3, "f"); // eadfcb
+        keys = keys.insert(4, "g"); // eadfgcb
+        keys = keys.insert(5, "h"); // eadfghcb
+        keys = keys.insert(1, "i"); // eiadfghcb
+        keys = keys.insert(7, "j"); // eiadfghjcb
+        assertEquals("(((e i) (a d)) ((f g h) (j c b)))", keys.toString());
+
+        keys = keys.insert(8, "k"); // eiadfghjkcb
+        keys = keys.insert(9, "l"); // eiadfghjklcb
+        keys = keys.insert(12, "m"); //eiadfghjklcbm
+        keys = keys.insert(12, "n"); //eiadfghjklcbnm
+        keys = keys.insert(2, "o"); // eioadfghjklcbnm
+        keys = keys.insert(3, "p"); // eiopadfghjklcbnm
+        keys = keys.insert(0, "q"); // qeiopadfghjklcbnm
+        keys = keys.insert(2, "r"); // qeriopadfghjklcbnm
+        keys = keys.insert(7, "s"); // qeriopasdfghjklcbnm
+        keys = keys.insert(3, "t"); // qertiopasdfghjklcbnm
+        keys = keys.insert(4, "u"); // qertuiopasdfghjklcbnm
+        keys = keys.insert(18, "v"); //qertuiopasdfghjklcvbnm
+        keys = keys.insert(1, "w"); // qwertuiopasdfghjklcvbnm
+        assertEquals("((((q w) (e r) (t u) (i o)) ((p a) (s d))) (((f g h) (j k l)) ((c v b) (n m))))", keys.toString());
+
+        keys = keys.insert(18, "x"); //qwertuiopasdfghjklxcvbnm
+        keys = keys.insert(18, "y"); //qwertuiopasdfghjklyxcvbnm
+        keys = keys.insert(5, "z"); // qwertzuiopasdfghjklyxcvbnm
+        assertEquals("((((q w) (e r)) ((t z u) (i o)) ((p a) (s d))) (((f g h) (j k) (l y x)) ((c v b) (n m))))", keys.toString());
+
+        assertEquals(26, keys.size());
+        assertEquals("q", keys.get(0));
+        assertEquals("m", keys.get(25));
+    }
 }
