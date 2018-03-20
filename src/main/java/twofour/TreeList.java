@@ -15,6 +15,8 @@ public abstract class TreeList {
 
     public abstract String get(int index);
 
+    public abstract TreeList set(int index, String value);
+
     public abstract TreeList insert(int index, String value);
 
     public TreeList delete(int index) {
@@ -55,6 +57,11 @@ public abstract class TreeList {
         @Override
         public String get(int index) {
             throw new AssertionError("TreeList.EMPTY.get(" + index + ")");
+        }
+
+        @Override
+        public TreeList set(int index, String value) {
+            throw new AssertionError("TreeList.EMPTY.set(" + index + ", " + value + ")");
         }
 
         @Override

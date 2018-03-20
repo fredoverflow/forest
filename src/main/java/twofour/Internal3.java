@@ -33,6 +33,13 @@ class Internal3 extends TreeList {
     }
 
     @Override
+    public TreeList set(int index, String value) {
+        if (index < aCount) return new Internal3(a.set(index, value), b, c);
+        if (index < abCount) return new Internal3(a, b.set(index - aCount, value), c);
+        return new Internal3(a, b, c.set(index - abCount, value));
+    }
+
+    @Override
     public TreeList insert(int index, String value) {
         if (index < aCount || index == aCount && a.slots() <= b.slots()) {
             TreeList A = a.insert(index, value);

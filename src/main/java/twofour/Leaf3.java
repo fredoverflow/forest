@@ -31,6 +31,15 @@ class Leaf3 extends TreeList {
     }
 
     @Override
+    public TreeList set(int index, String value) {
+        if (index == 0) return new Leaf3(value, b, c);
+        if (index == 1) return new Leaf3(a, value, c);
+        if (index == 2) return new Leaf3(a, b, value);
+
+        throw new IllegalArgumentException("Leaf3.set(" + index + ", " + value + ")");
+    }
+
+    @Override
     public TreeList insert(int index, String value) {
         if (index == 0) return new Internal2Split(new Leaf2(value, a), new Leaf2(b, c));
         if (index == 1) return new Internal2Split(new Leaf2(a, value), new Leaf2(b, c));

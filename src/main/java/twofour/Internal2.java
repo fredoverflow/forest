@@ -38,6 +38,12 @@ class Internal2 extends TreeList {
     }
 
     @Override
+    public TreeList set(int index, String value) {
+        if (index < aCount) return new Internal2(a.set(index, value), b);
+        return new Internal2(a, b.set(index - aCount, value));
+    }
+
+    @Override
     public TreeList insert(int index, String value) {
         if (index < aCount || index == aCount && a.slots() <= b.slots()) {
             TreeList A = a.insert(index, value);

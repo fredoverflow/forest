@@ -25,6 +25,13 @@ class Leaf1 extends TreeList {
     }
 
     @Override
+    public TreeList set(int index, String value) {
+        if (index == 0) return new Leaf1(value);
+
+        throw new IllegalArgumentException("Leaf1.set(" + index + ", " + value + ")");
+    }
+
+    @Override
     public TreeList insert(int index, String value) {
         if (index == 0) return new Leaf2(value, this.value);
         if (index == 1) return new Leaf2(this.value, value);

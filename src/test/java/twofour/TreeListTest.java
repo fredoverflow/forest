@@ -16,6 +16,51 @@ public class TreeListTest {
     }
 
     @Test
+    public void setLeaf1() {
+        TreeList t = new Leaf1("a");
+        assertEquals("(_)", t.set(0, "_").toString());
+    }
+
+    @Test
+    public void setLeaf2() {
+        TreeList t = new Leaf2("a", "b");
+        assertEquals("(_ b)", t.set(0, "_").toString());
+        assertEquals("(a _)", t.set(1, "_").toString());
+    }
+
+    @Test
+    public void setLeaf3() {
+        TreeList t = new Leaf3("a", "b", "c");
+        assertEquals("(_ b c)", t.set(0, "_").toString());
+        assertEquals("(a _ c)", t.set(1, "_").toString());
+        assertEquals("(a b _)", t.set(2, "_").toString());
+    }
+
+    @Test
+    public void setInternal2() {
+        TreeList t = new Internal2(new Leaf1("a"), new Leaf1("b"));
+        assertEquals("((_) (b))", t.set(0, "_").toString());
+        assertEquals("((a) (_))", t.set(1, "_").toString());
+    }
+
+    @Test
+    public void setInternal3() {
+        TreeList t = new Internal3(new Leaf1("a"), new Leaf1("b"), new Leaf1("c"));
+        assertEquals("((_) (b) (c))", t.set(0, "_").toString());
+        assertEquals("((a) (_) (c))", t.set(1, "_").toString());
+        assertEquals("((a) (b) (_))", t.set(2, "_").toString());
+    }
+
+    @Test
+    public void setInternal4() {
+        TreeList t = new Internal4(new Leaf1("a"), new Leaf1("b"), new Leaf1("c"), new Leaf1("d"));
+        assertEquals("((_) (b) (c) (d))", t.set(0, "_").toString());
+        assertEquals("((a) (_) (c) (d))", t.set(1, "_").toString());
+        assertEquals("((a) (b) (_) (d))", t.set(2, "_").toString());
+        assertEquals("((a) (b) (c) (_))", t.set(3, "_").toString());
+    }
+
+    @Test
     public void insertOne() {
         TreeList a = TreeList.EMPTY.insert(0, "a");
         assertEquals("(a)", a.toString());

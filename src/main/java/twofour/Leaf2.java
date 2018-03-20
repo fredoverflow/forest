@@ -28,6 +28,14 @@ class Leaf2 extends TreeList {
     }
 
     @Override
+    public TreeList set(int index, String value) {
+        if (index == 0) return new Leaf2(value, b);
+        if (index == 1) return new Leaf2(a, value);
+
+        throw new IllegalArgumentException("Leaf2.set(" + index + ", " + value + ")");
+    }
+
+    @Override
     public TreeList insert(int index, String value) {
         if (index == 0) return new Leaf3(value, a, b);
         if (index == 1) return new Leaf3(a, value, b);

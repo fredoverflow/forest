@@ -28,6 +28,11 @@ class Orphaned extends TreeList {
     }
 
     @Override
+    public TreeList set(int index, String value) {
+        throw new AssertionError();
+    }
+
+    @Override
     public TreeList insert(int index, String value) {
         throw new AssertionError();
     }
@@ -39,8 +44,8 @@ class Orphaned extends TreeList {
 
     @Override
     void appendTo(StringBuilder sb) {
-        sb.append('<');
+        sb.append("~~~");
         sb.append(orphan);
-        sb.append('>');
+        sb.append("~~~");
     }
 }
