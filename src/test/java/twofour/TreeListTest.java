@@ -2,7 +2,11 @@ package twofour;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class TreeListTest {
     @Test
@@ -194,6 +198,7 @@ public class TreeListTest {
     @Test
     public void insertGermanKeys() {
         TreeList keys = TreeList.EMPTY;
+
         keys = keys.insert(0, "a"); // a
         keys = keys.insert(1, "b"); // ab
         keys = keys.insert(1, "c"); // acb
@@ -229,5 +234,73 @@ public class TreeListTest {
         assertEquals(26, keys.size());
         assertEquals("q", keys.get(0));
         assertEquals("m", keys.get(25));
+    }
+
+    private static final String[] alphabet = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"};
+
+    @Test
+    public void stressTestAlphabet() {
+        for (int i = 0; i < 10_000; ++i) {
+            assertBehavesLikeArrayList(alphabet);
+        }
+    }
+
+    private Random rng = new Random(0);
+
+    private void assertBehavesLikeArrayList(String... values) {
+        ArrayList<String> arrayList = new ArrayList<>();
+        TreeList treeList = TreeList.EMPTY;
+
+        final int len = values.length;
+
+        for (int i = 0; i < len; ++i) {
+            int index = rng.nextInt(i + 1);
+            arrayList.add(index, values[i]);
+            treeList = treeList.insert(index, values[i]);
+            assertListEquals(arrayList, treeList);
+        }
+
+        for (int i = len; i > 0; --i) {
+            int index = rng.nextInt(i);
+            arrayList.remove(index);
+            treeList = treeList.delete(index);
+            assertListEquals(arrayList, treeList);
+        }
+    }
+
+    private static void assertListEquals(ArrayList<String> arrayList, TreeList treeList) {
+        int size = arrayList.size();
+        assertEquals(size, treeList.size());
+        for (int i = 0; i < size; ++i) {
+            assertEquals(arrayList.get(i), treeList.get(i));
+        }
+        assertBalanced(treeList);
+    }
+
+    private static void assertBalanced(TreeList t) {
+        int depth = Integer.MIN_VALUE;
+        int current = 0;
+        String s = t.toString();
+        for (int i = 0; i < s.length(); ++i) {
+            char c = s.charAt(i);
+            switch (c) {
+                case '(':
+                    ++current;
+                    break;
+
+                case ')':
+                    --current;
+                    break;
+
+                default:
+                    if (depth == Integer.MIN_VALUE) {
+                        depth = current;
+                    } else if (depth != current) {
+                        fail("unbalanced tree " + t);
+                    }
+
+                case ' ':
+            }
+        }
     }
 }

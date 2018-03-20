@@ -17,6 +17,16 @@ class Internal2 extends TreeList {
     }
 
     @Override
+    TreeList first() {
+        return a;
+    }
+
+    @Override
+    TreeList second() {
+        return b;
+    }
+
+    @Override
     public int size() {
         return aCount + b.size();
     }
@@ -43,6 +53,34 @@ class Internal2 extends TreeList {
             Internal2Split S = (Internal2Split) B;
             return new Internal3(a, S.a, S.b);
         }
+    }
+
+    @Override
+    TreeList deleteHelper(int index) {
+        if (index < aCount) {
+            TreeList A = a.deleteHelper(index);
+            if (A == TreeList.EMPTY) return new Orphaned(b);
+            if (!(A instanceof Orphaned)) return new Internal2(A, b);
+            return b.shiftLeftOrMergeWith(A);
+        }
+        {
+            TreeList B = b.deleteHelper(index - aCount);
+            if (B == TreeList.EMPTY) return new Orphaned(a);
+            if (!(B instanceof Orphaned)) return new Internal2(a, B);
+            return a.shiftRightOrMergeWith(B);
+        }
+    }
+
+    @Override
+    TreeList shiftLeftOrMergeWith(TreeList leftOrphaned) {
+        // merge
+        return new Orphaned(new Internal3(leftOrphaned.first(), a, b));
+    }
+
+    @Override
+    TreeList shiftRightOrMergeWith(TreeList rightOrphaned) {
+        // merge
+        return new Orphaned(new Internal3(a, b, rightOrphaned.first()));
     }
 
     @Override

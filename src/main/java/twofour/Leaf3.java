@@ -41,6 +41,15 @@ class Leaf3 extends TreeList {
     }
 
     @Override
+    TreeList deleteHelper(int index) {
+        if (index == 0) return new Leaf2(b, c);
+        if (index == 1) return new Leaf2(a, c);
+        if (index == 2) return new Leaf2(a, b);
+
+        throw new IllegalArgumentException("Leaf3.deleteHelper(" + index + ")");
+    }
+
+    @Override
     void appendTo(StringBuilder sb) {
         sb.append('(');
         sb.append(a);

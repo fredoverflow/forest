@@ -58,6 +58,46 @@ class Internal3 extends TreeList {
     }
 
     @Override
+    TreeList deleteHelper(int index) {
+        if (index < aCount) {
+            TreeList A = a.deleteHelper(index);
+            if (A == TreeList.EMPTY) return new Internal2(b, c);
+            if (!(A instanceof Orphaned)) return new Internal3(A, b, c);
+            TreeList B = b.shiftLeftOrMergeWith(A);
+            if (B instanceof Orphaned) return new Internal2(B.first(), c);
+            return new Internal3(B.first(), B.second(), c);
+        }
+        if (index < abCount) {
+            TreeList B = b.deleteHelper(index - aCount);
+            if (B == TreeList.EMPTY) return new Internal2(a, c);
+            if (!(B instanceof Orphaned)) return new Internal3(a, B, c);
+            TreeList C = c.shiftLeftOrMergeWith(B);
+            if (C instanceof Orphaned) return new Internal2(a, C.first());
+            return new Internal3(a, C.first(), C.second());
+        }
+        {
+            TreeList C = c.deleteHelper(index - abCount);
+            if (C == TreeList.EMPTY) return new Internal2(a, b);
+            if (!(C instanceof Orphaned)) return new Internal3(a, b, C);
+            TreeList B = b.shiftRightOrMergeWith(C);
+            if (B instanceof Orphaned) return new Internal2(a, B.first());
+            return new Internal3(a, B.first(), B.second());
+        }
+    }
+
+    @Override
+    TreeList shiftLeftOrMergeWith(TreeList leftOrphaned) {
+        // shift
+        return new Internal2(new Internal2(leftOrphaned.first(), a), new Internal2(b, c));
+    }
+
+    @Override
+    TreeList shiftRightOrMergeWith(TreeList rightOrphaned) {
+        // shift
+        return new Internal2(new Internal2(a, b), new Internal2(c, rightOrphaned.first()));
+    }
+
+    @Override
     void appendTo(StringBuilder sb) {
         sb.append('(');
         a.appendTo(sb);

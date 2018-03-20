@@ -3,11 +3,34 @@ package twofour;
 public abstract class TreeList {
     abstract int slots();
 
+    TreeList first() {
+        throw new AssertionError();
+    }
+
+    TreeList second() {
+        throw new AssertionError();
+    }
+
     public abstract int size();
 
     public abstract String get(int index);
 
     public abstract TreeList insert(int index, String value);
+
+    public TreeList delete(int index) {
+        TreeList temp = deleteHelper(index);
+        return temp instanceof Orphaned ? temp.first() : temp;
+    }
+
+    abstract TreeList deleteHelper(int index);
+
+    TreeList shiftLeftOrMergeWith(TreeList leftOrphaned) {
+        throw new AssertionError();
+    }
+
+    TreeList shiftRightOrMergeWith(TreeList rightOrphaned) {
+        throw new AssertionError();
+    }
 
     @Override
     public String toString() {
@@ -39,6 +62,11 @@ public abstract class TreeList {
             if (index != 0) throw new IllegalArgumentException("TreeList.EMPTY.insert(" + index + ")");
 
             return new Leaf1(value);
+        }
+
+        @Override
+        TreeList deleteHelper(int index) {
+            throw new AssertionError("TreeList.EMPTY.deleteHelper(" + index + ")");
         }
 
         @Override
