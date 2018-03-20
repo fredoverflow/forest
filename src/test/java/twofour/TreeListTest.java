@@ -323,7 +323,7 @@ public class TreeListTest {
     }
 
     private static void assertBalanced(TreeList t) {
-        int depth = Integer.MIN_VALUE;
+        final int depth = t.depth();
         int current = 0;
         String s = t.toString();
         for (int i = 0; i < s.length(); ++i) {
@@ -338,9 +338,7 @@ public class TreeListTest {
                     break;
 
                 default:
-                    if (depth == Integer.MIN_VALUE) {
-                        depth = current;
-                    } else if (depth != current) {
+                    if (current != depth) {
                         fail("unbalanced tree " + t);
                     }
 

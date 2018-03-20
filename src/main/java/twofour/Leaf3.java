@@ -12,6 +12,11 @@ class Leaf3 extends TreeList {
     }
 
     @Override
+    int depth() {
+        return 1;
+    }
+
+    @Override
     int slots() {
         return 3;
     }

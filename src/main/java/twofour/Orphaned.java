@@ -8,8 +8,13 @@ class Orphaned extends TreeList {
     }
 
     @Override
+    int depth() {
+        throw new AssertionError();
+    }
+
+    @Override
     int slots() {
-        return 1;
+        throw new AssertionError();
     }
 
     @Override

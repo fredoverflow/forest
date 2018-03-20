@@ -12,6 +12,11 @@ class Internal2 extends TreeList {
     }
 
     @Override
+    int depth() {
+        return 1 + a.depth();
+    }
+
+    @Override
     int slots() {
         return 2;
     }

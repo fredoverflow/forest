@@ -1,6 +1,8 @@
 package twofour;
 
 public abstract class TreeList {
+    abstract int depth();
+
     abstract int slots();
 
     TreeList first() {
@@ -44,6 +46,11 @@ public abstract class TreeList {
     abstract void appendTo(StringBuilder sb);
 
     public static final TreeList EMPTY = new TreeList() {
+        @Override
+        int depth() {
+            return 0;
+        }
+
         @Override
         int slots() {
             return 0;
