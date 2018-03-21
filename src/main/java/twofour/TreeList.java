@@ -113,13 +113,51 @@ public abstract class TreeList {
     public static TreeList of(String a, String b, String c) {
         return new Leaf3(a, b, c);
     }
-
     public static TreeList of(String... values) {
-        TreeList result = TreeList.EMPTY;
-        int index = 0;
-        for (String s : values) {
-            result = result.insert(index++, s);
+        int len = values.length;
+        if (len == 0) return TreeList.EMPTY;
+
+        TreeList[] temp = new TreeList[(len + 2) / 3];
+        int i, k;
+        for (i = 0, k = 0; k + 2 < len; ++i, k += 3) {
+            temp[i] = new Leaf3(values[k], values[k + 1], values[k + 2]);
         }
-        return result;
+        switch (len - k) {
+            case 0:
+                break;
+            case 1:
+                temp[i++] = new Leaf1(values[k]);
+                break;
+            case 2:
+                temp[i++] = new Leaf2(values[k], values[k + 1]);
+                break;
+            default:
+                throw new AssertionError(len - k + "");
+        }
+        len = i;
+        while (len > 1) {
+            for (i = 0, k = 0; k + 3 + 2 < len; ++i, k += 4) {
+                temp[i] = new Internal4(temp[k], temp[k + 1], temp[k + 2], temp[k + 3]);
+            }
+            switch (len - k) {
+                case 2:
+                    temp[i++] = new Internal2(temp[k], temp[k + 1]);
+                    break;
+                case 3:
+                    temp[i++] = new Internal3(temp[k], temp[k + 1], temp[k + 2]);
+                    break;
+                case 4:
+                    temp[i++] = new Internal4(temp[k], temp[k + 1], temp[k + 2], temp[k + 3]);
+                    break;
+                case 5:
+                    temp[i++] = new Internal3(temp[k], temp[k + 1], temp[k + 2]);
+                    temp[i++] = new Internal2(temp[k + 3], temp[k + 4]);
+                    break;
+                default:
+                    throw new AssertionError(len - k + "");
+            }
+            len = i;
+        }
+        return temp[0];
     }
 }
