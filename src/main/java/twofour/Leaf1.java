@@ -1,5 +1,7 @@
 package twofour;
 
+import java.util.function.Consumer;
+
 class Leaf1 extends TreeList {
     final String value;
 
@@ -56,5 +58,10 @@ class Leaf1 extends TreeList {
         sb.append('(');
         sb.append(value);
         sb.append(')');
+    }
+
+    @Override
+    public void forEach(Consumer<? super String> action) {
+        action.accept(value);
     }
 }

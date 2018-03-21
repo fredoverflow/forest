@@ -346,4 +346,60 @@ public class TreeListTest {
             }
         }
     }
+
+    @Test
+    public void forEachEmpty() {
+        StringBuilder sb = new StringBuilder();
+        TreeList t = TreeList.EMPTY;
+        t.forEach(sb::append);
+        assertEquals("", sb.toString());
+    }
+
+    @Test
+    public void forEachLeaf1() {
+        StringBuilder sb = new StringBuilder();
+        TreeList t = new Leaf1("a");
+        t.forEach(sb::append);
+        assertEquals("a", sb.toString());
+    }
+
+    @Test
+    public void forEachLeaf2() {
+        StringBuilder sb = new StringBuilder();
+        TreeList t = new Leaf2("a", "b");
+        t.forEach(sb::append);
+        assertEquals("ab", sb.toString());
+    }
+
+    @Test
+    public void forEachLeaf3() {
+        StringBuilder sb = new StringBuilder();
+        TreeList t = new Leaf3("a", "b", "c");
+        t.forEach(sb::append);
+        assertEquals("abc", sb.toString());
+    }
+
+    @Test
+    public void forEachInternal2() {
+        StringBuilder sb = new StringBuilder();
+        TreeList t = new Internal2(new Leaf1("a"), new Leaf1("b"));
+        t.forEach(sb::append);
+        assertEquals("ab", sb.toString());
+    }
+
+    @Test
+    public void forEachInternal3() {
+        StringBuilder sb = new StringBuilder();
+        TreeList t = new Internal3(new Leaf1("a"), new Leaf1("b"), new Leaf1("c"));
+        t.forEach(sb::append);
+        assertEquals("abc", sb.toString());
+    }
+
+    @Test
+    public void forEachInternal4() {
+        StringBuilder sb = new StringBuilder();
+        TreeList t = new Internal4(new Leaf1("a"), new Leaf1("b"), new Leaf1("c"), new Leaf1("d"));
+        t.forEach(sb::append);
+        assertEquals("abcd", sb.toString());
+    }
 }

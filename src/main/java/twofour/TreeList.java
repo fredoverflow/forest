@@ -1,5 +1,7 @@
 package twofour;
 
+import java.util.function.Consumer;
+
 public abstract class TreeList {
     abstract int depth();
 
@@ -44,6 +46,8 @@ public abstract class TreeList {
     }
 
     abstract void appendTo(StringBuilder sb);
+
+    public abstract void forEach(Consumer<? super String> action);
 
     public static final TreeList EMPTY = new TreeList() {
         @Override
@@ -91,6 +95,10 @@ public abstract class TreeList {
         @Override
         void appendTo(StringBuilder sb) {
             throw new AssertionError("TreeList.EMPTY.appendTo");
+        }
+
+        @Override
+        public void forEach(Consumer<? super String> action) {
         }
     };
 

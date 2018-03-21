@@ -1,5 +1,7 @@
 package twofour;
 
+import java.util.function.Consumer;
+
 class Internal2 extends TreeList {
     final TreeList a;
     final int aCount;
@@ -101,5 +103,11 @@ class Internal2 extends TreeList {
         sb.append(' ');
         b.appendTo(sb);
         sb.append(')');
+    }
+
+    @Override
+    public void forEach(Consumer<? super String> action) {
+        a.forEach(action);
+        b.forEach(action);
     }
 }

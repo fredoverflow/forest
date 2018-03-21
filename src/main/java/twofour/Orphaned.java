@@ -1,5 +1,7 @@
 package twofour;
 
+import java.util.function.Consumer;
+
 class Orphaned extends TreeList {
     final TreeList orphan;
 
@@ -52,5 +54,10 @@ class Orphaned extends TreeList {
         sb.append("~~~");
         sb.append(orphan);
         sb.append("~~~");
+    }
+
+    @Override
+    public void forEach(Consumer<? super String> action) {
+        throw new AssertionError();
     }
 }
