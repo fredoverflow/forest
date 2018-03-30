@@ -1,11 +1,17 @@
 package twofour;
 
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.function.Consumer;
 
-public abstract class TreeList {
+public abstract class TreeList implements Iterable<String> {
     abstract int height();
 
     abstract int slots();
+
+    TreeList slot(int index) {
+        throw new AssertionError();
+    }
 
     TreeList first() {
         throw new AssertionError();
@@ -47,7 +53,59 @@ public abstract class TreeList {
 
     abstract void appendTo(StringBuilder sb);
 
-    public abstract void forEach(Consumer<? super String> action);
+    @Override
+    public Iterator<String> iterator() {
+        return new TreeListIterator(this);
+    }
+
+    private static class TreeListIterator implements Iterator<String> {
+        final TreeList[] path;
+        final int[] index;
+
+        TreeList leaf;
+        int leafIndex;
+
+        TreeListIterator(TreeList treeList) {
+            int height_1 = treeList.height() - 1;
+            path = new TreeList[height_1];
+            index = new int[height_1];
+
+            path[0] = treeList;
+            for (int i = 1; i < height_1; ++i) {
+                treeList = path[i] = treeList.slot(0);
+            }
+
+            leaf = treeList.slot(0);
+            leafIndex = 0;
+        }
+
+        @Override
+        public boolean hasNext() {
+            return leaf != null;
+        }
+
+        @Override
+        public String next() {
+            String result = leaf.get(leafIndex);
+            ++leafIndex;
+            if (leafIndex == leaf.size()) {
+                int i = index.length - 1;
+                do {
+                    ++index[i];
+                } while (index[i] == path[i].slots() && (index[i] = 0) <= --i);
+                if (i == -1) {
+                    leaf = null;
+                } else {
+                    for (; i + 1 < path.length; ++i) {
+                        path[i + 1] = path[i].slot(index[i]);
+                    }
+                    leaf = path[i].slot(index[i]);
+                    leafIndex = 0;
+                }
+            }
+            return result;
+        }
+    }
 
     public static final TreeList EMPTY = new TreeList() {
         @Override
@@ -100,6 +158,11 @@ public abstract class TreeList {
         @Override
         public void forEach(Consumer<? super String> action) {
         }
+
+        @Override
+        public Iterator<String> iterator() {
+            return Collections.emptyIterator();
+        }
     };
 
     public static TreeList of(String value) {
@@ -113,6 +176,7 @@ public abstract class TreeList {
     public static TreeList of(String a, String b, String c) {
         return new Leaf3(a, b, c);
     }
+
     public static TreeList of(String... values) {
         int len = values.length;
         if (len == 0) return TreeList.EMPTY;

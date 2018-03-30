@@ -4,10 +4,10 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Random;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import static twofour.TreeList.of;
 
 public class TreeListTest {
@@ -266,5 +266,74 @@ public class TreeListTest {
 
     private String prefix(int length) {
         return of(Arrays.copyOf(alphabet, length)).toString();
+    }
+
+    @Test
+    public void iteratorAllVariants() {
+        TreeList abc = of("a", "b", "c");
+        TreeList de = of("d", "e");
+        TreeList f = of("f");
+        TreeList g = of("g");
+
+        TreeList h = of("h");
+        TreeList i = of("i");
+        TreeList j = of("j");
+
+        TreeList x = new Internal4(abc, de, f, g);
+        TreeList y = new Internal3(h, i, j);
+        TreeList z = new Internal2(x, y);
+
+        assertIterableBehavesLikeForEach(z);
+    }
+
+    @Test
+    public void iteratorDeep() {
+        TreeList ab = new Internal2(of("a"), of("b"));
+        TreeList cd = new Internal2(of("c"), of("d"));
+        TreeList abcd = new Internal2(ab, cd);
+        TreeList ef = new Internal2(of("e"), of("f"));
+        TreeList gh = new Internal2(of("g"), of("h"));
+        TreeList efgh = new Internal2(ef, gh);
+        TreeList abcdefgh = new Internal2(abcd, efgh);
+
+        TreeList ij = new Internal2(of("i"), of("j"));
+        TreeList kl = new Internal2(of("k"), of("l"));
+        TreeList ijkl = new Internal2(ij, kl);
+        TreeList mn = new Internal2(of("m"), of("n"));
+        TreeList op = new Internal2(of("o"), of("p"));
+        TreeList mnop = new Internal2(mn, op);
+        TreeList ijklmnop = new Internal2(ijkl, mnop);
+
+        TreeList abcdefghijklmnop = new Internal2(abcdefgh, ijklmnop);
+        assertIterableBehavesLikeForEach(abcdefghijklmnop);
+    }
+
+    @Test
+    public void iteratorEmpty() {
+        assertIterableBehavesLikeForEach(TreeList.EMPTY);
+    }
+
+    @Test
+    public void iteratorLeaf1() {
+        assertIterableBehavesLikeForEach(of("a"));
+    }
+
+    @Test
+    public void iteratorLeaf2() {
+        assertIterableBehavesLikeForEach(of("a", "b"));
+    }
+
+    @Test
+    public void iteratorLeaf3() {
+        assertIterableBehavesLikeForEach(of("a", "b", "c"));
+    }
+
+    private void assertIterableBehavesLikeForEach(TreeList treeList) {
+        Iterator<String> it = treeList.iterator();
+        treeList.forEach(string -> {
+            assertTrue(it.hasNext());
+            assertEquals(string, it.next());
+        });
+        assertFalse(it.hasNext());
     }
 }

@@ -1,5 +1,6 @@
 package twofour;
 
+import java.util.Iterator;
 import java.util.function.Consumer;
 
 class Leaf2 extends TreeList {
@@ -72,5 +73,22 @@ class Leaf2 extends TreeList {
     public void forEach(Consumer<? super String> action) {
         action.accept(a);
         action.accept(b);
+    }
+
+    @Override
+    public Iterator<String> iterator() {
+        return new Iterator<String>() {
+            int index = 0;
+
+            @Override
+            public boolean hasNext() {
+                return index < 2;
+            }
+
+            @Override
+            public String next() {
+                return get(index++);
+            }
+        };
     }
 }

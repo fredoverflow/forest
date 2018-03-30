@@ -28,6 +28,16 @@ class Internal3 extends TreeList {
     }
 
     @Override
+    TreeList slot(int index) {
+        switch (index) {
+            case 0: return a;
+            case 1: return b;
+            case 2: return c;
+        }
+        throw new IllegalArgumentException("slot(" + index + ")");
+    }
+
+    @Override
     public int size() {
         return abCount + c.size();
     }
