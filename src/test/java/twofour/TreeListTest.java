@@ -145,7 +145,7 @@ public class TreeListTest {
     }
 
     private static void assertBalanced(TreeList t) {
-        final int depth = t.depth();
+        final int height = t.height();
         int current = 0;
         String s = t.toString();
         for (int i = 0; i < s.length(); ++i) {
@@ -160,7 +160,7 @@ public class TreeListTest {
                     break;
 
                 default:
-                    if (current != depth) {
+                    if (current != height) {
                         fail("unbalanced tree " + t);
                     }
 

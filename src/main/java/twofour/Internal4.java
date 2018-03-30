@@ -22,8 +22,8 @@ class Internal4 extends TreeList {
     }
 
     @Override
-    int depth() {
-        return 1 + a.depth();
+    int height() {
+        return 1 + a.height();
     }
 
     @Override

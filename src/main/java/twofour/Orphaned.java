@@ -10,7 +10,7 @@ class Orphaned extends TreeList {
     }
 
     @Override
-    int depth() {
+    int height() {
         throw new AssertionError();
     }
 

@@ -3,7 +3,7 @@ package twofour;
 import java.util.function.Consumer;
 
 public abstract class TreeList {
-    abstract int depth();
+    abstract int height();
 
     abstract int slots();
 
@@ -51,7 +51,7 @@ public abstract class TreeList {
 
     public static final TreeList EMPTY = new TreeList() {
         @Override
-        int depth() {
+        int height() {
             return 0;
         }
 

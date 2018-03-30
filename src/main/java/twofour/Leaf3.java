@@ -14,7 +14,7 @@ class Leaf3 extends TreeList {
     }
 
     @Override
-    int depth() {
+    int height() {
         return 1;
     }
 
