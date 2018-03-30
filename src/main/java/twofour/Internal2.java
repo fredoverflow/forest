@@ -119,4 +119,9 @@ class Internal2 extends TreeList {
         a.forEach(action);
         b.forEach(action);
     }
+
+    @Override
+    public int hashCode() {
+        return a.hashCode() * 31 + b.hashCode();
+    }
 }

@@ -336,4 +336,64 @@ public class TreeListTest {
         });
         assertFalse(it.hasNext());
     }
+
+    @Test
+    public void emptyListOnlyEqualsItself() {
+        assertEquals(TreeList.EMPTY, TreeList.EMPTY);
+        assertNotEquals(TreeList.EMPTY, TreeList.of("a"));
+        assertNotEquals(TreeList.of("a"), TreeList.EMPTY);
+    }
+
+    @Test
+    public void listEqualsItself() {
+        TreeList a = TreeList.of(alphabet);
+        assertEquals(a, a);
+    }
+
+    @Test
+    public void listEqualsCopy() {
+        TreeList a = TreeList.of(alphabet);
+        TreeList b = TreeList.of(alphabet);
+        assertEquals(a, b);
+    }
+
+    @Test
+    public void leaf2EqualsInternal2() {
+        TreeList leaf = of("a", "b");
+        TreeList internal = new Internal2(of("a"), of("b"));
+        assertEquals(leaf, internal);
+        assertEquals(leaf.hashCode(), internal.hashCode());
+    }
+
+    @Test
+    public void leaf3EqualsInternal3() {
+        TreeList leaf = of("a", "b", "c");
+        TreeList internal = new Internal3(of("a"), of("b"), of("c"));
+        assertEquals(leaf, internal);
+        assertEquals(leaf.hashCode(), internal.hashCode());
+    }
+
+    @Test
+    public void lastLetterMissing() {
+        TreeList alpha = of(alphabet);
+        TreeList prefix = alpha.delete(25);
+        assertNotEquals(alpha, prefix);
+        assertNotEquals(prefix, alpha);
+    }
+
+    @Test
+    public void oneLetterDiffers() {
+        TreeList alpha = of(alphabet);
+        for (int i = 0; i < 26; ++i) {
+            assertNotEquals(alpha, alpha.set(i, "_"));
+        }
+    }
+
+    @Test
+    public void oneLetterCopied() {
+        TreeList alpha = of(alphabet);
+        for (int i = 0; i < 26; ++i) {
+            assertEquals(alpha, alpha.set(i, alpha.get(i)));
+        }
+    }
 }

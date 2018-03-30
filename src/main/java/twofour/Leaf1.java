@@ -82,4 +82,9 @@ class Leaf1 extends TreeList {
             }
         };
     }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
 }

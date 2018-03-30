@@ -91,4 +91,9 @@ class Leaf2 extends TreeList {
             }
         };
     }
+
+    @Override
+    public int hashCode() {
+        return a.hashCode() * 31 + b.hashCode();
+    }
 }

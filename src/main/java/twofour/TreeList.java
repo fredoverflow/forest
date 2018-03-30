@@ -107,6 +107,22 @@ public abstract class TreeList implements Iterable<String> {
         }
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (!(obj instanceof TreeList)) return false;
+        TreeList that = (TreeList) obj;
+        if (this.size() != that.size()) return false;
+
+        Iterator<String> a = this.iterator();
+        Iterator<String> b = that.iterator();
+        while (a.hasNext()) {
+            if (!a.next().equals(b.next())) return false;
+        }
+        return true;
+        // note: hashCode() is implemented in leaves and internal nodes!
+    }
+
     public static final TreeList EMPTY = new TreeList() {
         @Override
         int height() {
@@ -162,6 +178,12 @@ public abstract class TreeList implements Iterable<String> {
         @Override
         public Iterator<String> iterator() {
             return Collections.emptyIterator();
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            // There is only ever one empty list instance in memory.
+            return this == obj;
         }
     };
 

@@ -100,4 +100,9 @@ class Leaf3 extends TreeList {
             }
         };
     }
+
+    @Override
+    public int hashCode() {
+        return (a.hashCode() * 31 + b.hashCode()) * 31 + c.hashCode();
+    }
 }
