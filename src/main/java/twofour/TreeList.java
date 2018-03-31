@@ -60,12 +60,12 @@ public abstract class TreeList implements Iterable<String> {
 
     private static class TreeListIterator implements Iterator<String> {
         TreeList[] path;
-        int[] index;
+        long index;
 
         TreeListIterator(TreeList treeList) {
             final int height = treeList.height();
             path = new TreeList[height];
-            index = new int[height];
+            index = 0;
 
             path[height - 1] = treeList;
             for (int i = height - 1; i > 0; --i) {
@@ -80,21 +80,35 @@ public abstract class TreeList implements Iterable<String> {
 
         @Override
         public String next() {
-            String result = path[0].get(index[0]);
+            String result = path[0].get(currentIndex());
             final int height = path.length;
             int i;
             for (i = 0; i < height; ++i) {
-                if (++index[i] < path[i].slots()) break;
+                if (currentIndex() + 1 < path[i].slots()) break;
+                popIndex();
             }
             if (i == height) {
                 path = null;
             } else {
+                ++index;
                 for (; i > 0; --i) {
-                    path[i - 1] = path[i].slot(index[i]);
-                    index[i - 1] = 0;
+                    path[i - 1] = path[i].slot(currentIndex());
+                    pushIndex();
                 }
             }
             return result;
+        }
+
+        int currentIndex() {
+            return (int) index & 3;
+        }
+
+        void popIndex() {
+            index >>>= 2;
+        }
+
+        void pushIndex() {
+            index <<= 2;
         }
     }
 
