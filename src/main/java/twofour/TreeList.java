@@ -59,48 +59,39 @@ public abstract class TreeList implements Iterable<String> {
     }
 
     private static class TreeListIterator implements Iterator<String> {
-        final TreeList[] path;
-        final int[] index;
-
-        TreeList leaf;
-        int leafIndex;
+        TreeList[] path;
+        int[] index;
 
         TreeListIterator(TreeList treeList) {
-            int height_1 = treeList.height() - 1;
-            path = new TreeList[height_1];
-            index = new int[height_1];
+            final int height = treeList.height();
+            path = new TreeList[height];
+            index = new int[height];
 
-            path[0] = treeList;
-            for (int i = 1; i < height_1; ++i) {
-                treeList = path[i] = treeList.slot(0);
+            path[height - 1] = treeList;
+            for (int i = height - 1; i > 0; --i) {
+                path[i - 1] = path[i].slot(0);
             }
-
-            leaf = treeList.slot(0);
-            leafIndex = 0;
         }
 
         @Override
         public boolean hasNext() {
-            return leaf != null;
+            return path != null;
         }
 
         @Override
         public String next() {
-            String result = leaf.get(leafIndex);
-            ++leafIndex;
-            if (leafIndex == leaf.size()) {
-                int i = index.length - 1;
-                do {
-                    ++index[i];
-                } while (index[i] == path[i].slots() && (index[i] = 0) <= --i);
-                if (i == -1) {
-                    leaf = null;
-                } else {
-                    for (; i + 1 < path.length; ++i) {
-                        path[i + 1] = path[i].slot(index[i]);
-                    }
-                    leaf = path[i].slot(index[i]);
-                    leafIndex = 0;
+            String result = path[0].get(index[0]);
+            final int height = path.length;
+            int i;
+            for (i = 0; i < height; ++i) {
+                if (++index[i] < path[i].slots()) break;
+            }
+            if (i == height) {
+                path = null;
+            } else {
+                for (; i > 0; --i) {
+                    path[i - 1] = path[i].slot(index[i]);
+                    index[i - 1] = 0;
                 }
             }
             return result;

@@ -67,23 +67,6 @@ class Leaf1 extends TreeList {
     }
 
     @Override
-    public Iterator<String> iterator() {
-        return new Iterator<String>() {
-            int index = 0;
-
-            @Override
-            public boolean hasNext() {
-                return index < 1;
-            }
-
-            @Override
-            public String next() {
-                return get(index++);
-            }
-        };
-    }
-
-    @Override
     public int hashCode() {
         return value.hashCode();
     }

@@ -85,23 +85,6 @@ class Leaf3 extends TreeList {
     }
 
     @Override
-    public Iterator<String> iterator() {
-        return new Iterator<String>() {
-            int index = 0;
-
-            @Override
-            public boolean hasNext() {
-                return index < 3;
-            }
-
-            @Override
-            public String next() {
-                return get(index++);
-            }
-        };
-    }
-
-    @Override
     public int hashCode() {
         return (a.hashCode() * 31 + b.hashCode()) * 31 + c.hashCode();
     }
