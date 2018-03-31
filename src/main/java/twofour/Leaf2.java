@@ -1,6 +1,5 @@
 package twofour;
 
-import java.util.Iterator;
 import java.util.function.Consumer;
 
 class Leaf2 extends TreeList {
